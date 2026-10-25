@@ -1,0 +1,7 @@
+# Placeholder: dependencies are NOT yet finalized.
+# Pending: pin exact versions once the processing scripts in src/ are written.
+# Likely candidates (not yet confirmed by any implemented code):
+# pandas
+# numpy
+# geopandas
+# matplotlib
