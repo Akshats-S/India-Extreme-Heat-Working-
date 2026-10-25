@@ -1,0 +1,230 @@
+{
+  "type": "FeatureCollection",
+  "name": "Indian_cities_extreme_heat_IMD",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Delhi",
+        "name": "Delhi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.209,
+          28.6139
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Jaipur",
+        "name": "Jaipur"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.7873,
+          26.9124
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Ahmedabad",
+        "name": "Ahmedabad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.5714,
+          23.0225
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Mumbai",
+        "name": "Mumbai"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.8777,
+          19.076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Pune",
+        "name": "Pune"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8567,
+          18.5204
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Lucknow",
+        "name": "Lucknow"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.9462,
+          26.8467
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Patna",
+        "name": "Patna"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.1376,
+          25.5941
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Kolkata",
+        "name": "Kolkata"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          88.3639,
+          22.5726
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Bhopal",
+        "name": "Bhopal"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.4126,
+          23.2599
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Nagpur",
+        "name": "Nagpur"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.0882,
+          21.1458
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Hyderabad",
+        "name": "Hyderabad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          78.4867,
+          17.385
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Bengaluru",
+        "name": "Bengaluru"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.5946,
+          12.9716
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Chennai",
+        "name": "Chennai"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.2707,
+          13.0827
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Bhubaneswar",
+        "name": "Bhubaneswar"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.8245,
+          20.2961
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Guwahati",
+        "name": "Guwahati"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          91.7362,
+          26.1445
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "city": "Kochi",
+        "name": "Kochi"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.2673,
+          9.9312
+        ]
+      }
+    }
+  ]
+}

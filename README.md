@@ -6,14 +6,16 @@ Empirical analysis of extreme daytime and nighttime temperature trends across 16
 
 | | |
 |---|---|
-| **Goal** | Prepare a clean, reproducible dataset, document the preparation process, and identify environmental economics research applications. This is a university Environmental Economics empirical project; causal identification and full econometric analysis are **not** in scope. |
+| **Goal** | Prepare a clean, reproducible dataset, document the preparation process, and identify environmental economics research applications. This is a university Environmental Economics empirical project (Introduction to Environmental Economics, AY 2026–27); causal identification and full econometric analysis are **not** in scope. |
 | **Research question** | *To what extent has the frequency of extreme nighttime heat changed relative to extreme daytime heat across major Indian cities between 2001 and 2024?* |
 | **Dates used** | **1 January 2001 – 31 December 2024** (8,766 calendar days) |
+| **Deadline** | Replication package due **30 November 2026** (groups of up to 3). See [`docs/assignment-checklist.md`](docs/assignment-checklist.md). |
 | **Cities (16)** | Delhi, Jaipur, Ahmedabad, Mumbai, Pune, Lucknow, Patna, Kolkata, Bhopal, Nagpur, Hyderabad, Bengaluru, Chennai, Bhubaneswar, Guwahati, Kochi |
 | **Data** | IMD daily gridded maximum (Tmax) and minimum (Tmin) temperature, 1° resolution, from [IMDWeb](https://imdweb.lwcc.in/). Two CSVs (one per variable), 140,255 rows each. |
 | **Raw data in Git?** | **No.** IMD redistribution terms are unconfirmed, so raw CSVs are git-ignored. See [`data/README.md`](data/README.md). |
-| **Status** | Scaffold, documentation and raw-file audit done. Merge, validation, thresholds, cleaned dataset and visuals are **pending** (Issues #2–#7). |
-| **Using an AI assistant?** | Start with [`AGENTS.md`](AGENTS.md). The course limits AI use to **coding and verification**; no research findings or interpretation. |
+| **Status** | Scaffold, documentation, raw-file audit and city file done. Merge, validation, thresholds, cleaned dataset and visuals are **pending** (Issues #2–#7). |
+| **Two repositories** | This repo is the working and final source. A separate repo, `india-extreme-heat-submission`, holds only what the course handout asks for and is built from this one at the end. |
+| **Using an AI assistant?** | Start with [`AGENTS.md`](AGENTS.md). AI tools may be used for all parts of the project (confirmed by the course instructor); a team member must verify everything that is submitted. |
 
 ## Getting started
 
@@ -36,9 +38,9 @@ Then read [`CONTRIBUTING.md`](CONTRIBUTING.md) (branches and pull requests) and 
 | Dataset | Daily gridded maximum and minimum temperature, 1° spatial resolution |
 | Max-temperature file | The CSV with a `tmax` column (identified from its header) |
 | Min-temperature file | The CSV with a `tmin` column (identified from its header) |
-| City coordinates | `config/cities.geojson` (**pending upload**); coordinates also appear in the CSVs |
+| City coordinates | [`config/cities.geojson`](config/cities.geojson) (16 city points; matches the point coordinates in both CSVs) |
 
-Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). IMD's data-supply procedure states that supplied data must not be shared with third parties, so the raw files stay local.
+Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). IMD's data-supply procedure states that supplied data must not be shared with third parties, so the raw files stay local. Whether the IMDWeb download counts as open-access (the handout requires open-access data) is **open**; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md).
 
 ## Daily maximum vs. minimum temperature
 
@@ -69,7 +71,7 @@ india-extreme-heat/
 │   ├── raw/               Local-only raw IMD downloads (git-ignored)
 │   └── processed/         Pipeline outputs (git-ignored by default)
 ├── config/
-│   └── cities.geojson     City coordinates (pending upload)
+│   └── cities.geojson     The 16 city points
 ├── src/
 │   ├── README.md
 │   └── audit_raw_data.py  Structural audit of the raw CSVs
@@ -77,8 +79,11 @@ india-extreme-heat/
 ├── outputs/
 │   └── figures/           Generated figures (none yet)
 └── docs/
-    ├── data-dictionary.md Columns, file identification, observed structure
-    └── methodology.md     Technical outline, open decisions, decision log
+    ├── data-dictionary.md       Columns, file identification, observed structure
+    ├── methodology.md           Technical outline, open decisions, decision log
+    ├── assignment-checklist.md  Course requirements vs. status
+    ├── research-questions.md    Candidate research questions (template)
+    └── verification-log.md      Who verified which step
 ```
 
 Empty folders contain a `.gitkeep` placeholder so Git tracks them.
@@ -89,11 +94,11 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 
 | # | Step | Status |
 |---|------|--------|
-| 1 | Audit and document the raw datasets | **Partly done:** files identified, structure audited (`src/audit_raw_data.py`, data dictionary). Pending: upload/inspect `cities.geojson`, confirm units |
+| 1 | Audit and document the raw datasets | **Partly done:** files identified, structure audited (`src/audit_raw_data.py`, data dictionary), city file added. Pending: confirm units |
 | 2 | Merge max and min observations by location and date | Pending |
 | 3 | Validate missing values, duplicates, temperature ranges, spatial coverage | Pending (audit already shows one missing location-date; see data dictionary) |
 | 4 | Define extreme daytime and nighttime thresholds | Pending (team decision) |
-| 5 | Generate the cleaned reproducible dataset | Pending |
+| 5 | Generate the cleaned reproducible dataset (must run with no manual steps) | Pending |
 | 6 | Exploratory visualizations and summary statistics | Pending |
 | 7 | Finalize documentation and verify reproducibility | Pending |
 
@@ -102,7 +107,7 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 | Step | Status |
 |------|--------|
 | Document data source and download process | Done (`data/README.md`) |
-| Obtain raw data from IMDWeb into `data/raw/` | Manual, per user, not in Git |
+| Obtain raw data from IMDWeb into `data/raw/` | Manual, per user, not in Git (handout wants no manual steps: **open question**) |
 | Raw-file audit script | Done (`src/audit_raw_data.py`) |
 | Pin exact dependency versions | **Pending** (minimum versions only) |
 | Processing scripts for merge, validation, thresholds, cleaned dataset | **Pending** |
@@ -111,10 +116,11 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 
 ## Next steps
 
-1. Upload `config/cities.geojson` to `config/` and confirm the 16 city names against the point coordinates.
+1. Settle with the instructor/TF whether the IMDWeb data counts as open-access and whether raw files may go in the submission (see [`docs/assignment-checklist.md`](docs/assignment-checklist.md)).
 2. Confirm temperature units and observation windows from IMD documentation.
 3. Work through Issues #2–#7.
 4. If the team wants to share data publicly, confirm IMD's redistribution terms first.
+5. Write the candidate research questions and the environmental economics relevance note ([`docs/research-questions.md`](docs/research-questions.md)), then build the separate submission repository.
 
 ## Contributing
 

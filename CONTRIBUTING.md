@@ -7,7 +7,7 @@ This is a small university research group project. The workflow below keeps `mai
 1. **Do not push directly to `main`.** All changes go through a pull request (PR) reviewed by at least one teammate. A repository rule enforces the PR requirement.
 2. **Work from an Issue.** Each task is tracked as a GitHub Issue. Comment on the Issue (or ask to be assigned) before starting so work is not duplicated.
 3. **Never commit raw IMD data** or anything under `data/raw/` (see `data/README.md`). Also never commit credentials, tokens or personal files.
-4. **Course AI/LLM policy:** the course limits AI/LLM use to coding assistance and verification. Do not use AI tools to generate research findings, academic analysis or interpretation. Follow your course instructions if they are stricter than this note.
+4. **AI tools are allowed.** The course instructor has confirmed full freedom to use AI/LLM tools. You remain responsible for everything you commit: read and verify AI-generated code and text, and never commit fabricated data or results.
 
 ## Branches
 
@@ -42,15 +42,17 @@ This is a small university research group project. The workflow below keeps `mai
 ## Code and documentation conventions (proposed)
 
 - Python 3; keep reusable code in `src/` and exploration in `notebooks/`.
+- The final pipeline must run end to end with no manual steps (course requirement).
 - Record any data-processing decision in `docs/methodology.md` when it is made.
 - Keep `requirements.txt` up to date when adding dependencies.
 - Distinguish clearly between completed and planned work in all documentation.
+- Log human verification of each step in `docs/verification-log.md`; the instructors review the code.
 
 ## Using AI assistants
 
 - Point your assistant at [AGENTS.md](AGENTS.md) first; it contains the project context, the data schema and the rules above.
-- Course policy: AI use is limited to **coding and verification**. Do not use it to produce research findings, interpretation or analysis text.
-- You remain responsible for everything you commit. Review AI-written code before opening a pull request, and never paste raw IMD data or credentials into an AI tool or into the repository.
+- AI tools may be used for any part of the work (code, analysis, writing).
+- You remain responsible for everything you commit. Review AI-written code before opening a pull request, and do not paste raw IMD data or credentials into an AI tool or into the repository (IMD's redistribution terms are unconfirmed).
 
 ## Branch protection
 
