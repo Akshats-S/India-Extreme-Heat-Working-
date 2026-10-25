@@ -15,7 +15,7 @@
 - Download interface: <https://imdweb.lwcc.in/>
 - Dataset: daily gridded maximum and minimum temperature, 1-degree spatial resolution
 - Period: 2001-01-01 to 2024-12-31
-- Geography: 16 Indian cities (listed in the top-level README; coordinates in `config/cities.geojson`, pending upload)
+- Geography: 16 Indian cities (listed in the top-level README; coordinates in `config/cities.geojson`)
 
 ## Why raw files are not in Git
 
@@ -38,3 +38,7 @@ IMDWeb gives each download a random file name, so identify files by their header
 4. Run `python src/audit_raw_data.py` to check structure and confirm which file is which.
 
 Teammates who need the files should obtain them from IMDWeb themselves or ask the team member who downloaded them (share privately, not through this repository).
+
+## Open-access / redistribution status
+
+The course handout requires open-access datasets, and IMD's data-supply procedure says supplied data must not be shared with third parties. Whether the IMDWeb download counts as open-access, and whether the raw files may be included in the submitted package, is an **open question** for the instructor/TF (see `docs/assignment-checklist.md`).
