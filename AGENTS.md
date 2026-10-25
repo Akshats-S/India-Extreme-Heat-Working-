@@ -1,5 +1,7 @@
 # AGENTS.md - read this first (AI coding assistants)
 
+> **VERY IMPORTANT: NO AI AUTHORSHIP, UNDER ANY CIRCUMSTANCE.** Everything in this repository is authored by the team members under their own GitHub names. AI tools (Claude, Claude Code, ChatGPT, Codex, Gemini, Copilot or any other) may help, but must never be credited or named as author or co-author: no `Co-Authored-By` lines, no "Generated with ..." footers, no tool or session links in commits, pull requests, issues, files or docs. If a tool adds such a line by default, delete it before committing or opening the pull request.
+
 This file is for any AI assistant or chatbot a teammate uses on this repository (Claude, ChatGPT, Copilot, Cursor, Gemini, etc.). Read it fully before suggesting or writing anything.
 
 ## Project in 60 seconds
