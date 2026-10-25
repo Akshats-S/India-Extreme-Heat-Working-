@@ -1,4 +1,4 @@
-# india-extreme-heat
+# India-Extreme-Heat-Working-
 
 Empirical analysis of extreme daytime and nighttime temperature trends across 16 major Indian cities (2001–2024), using India Meteorological Department data.
 
@@ -12,7 +12,8 @@ Empirical analysis of extreme daytime and nighttime temperature trends across 16
 | **Deadline** | Replication package due **30 November 2026** (groups of up to 3). See [`docs/assignment-checklist.md`](docs/assignment-checklist.md). |
 | **Cities (16)** | Delhi, Jaipur, Ahmedabad, Mumbai, Pune, Lucknow, Patna, Kolkata, Bhopal, Nagpur, Hyderabad, Bengaluru, Chennai, Bhubaneswar, Guwahati, Kochi |
 | **Data** | IMD daily gridded maximum (Tmax) and minimum (Tmin) temperature, 1° resolution, from [IMDWeb](https://imdweb.lwcc.in/). Two CSVs (one per variable), 140,255 rows each. |
-| **Raw data in Git?** | **No.** IMD redistribution terms are unconfirmed, so raw CSVs are git-ignored. See [`data/README.md`](data/README.md). |
+| **Raw data in Git?** | **Yes.** The two raw IMD CSVs are committed in `data/raw/` for team use. This repo is public, so they are publicly downloadable. See [`data/README.md`](data/README.md). |
+| **Course handout** | [`docs/handout/Instructions.pdf`](docs/handout/Instructions.pdf) |
 | **Status** | Scaffold, documentation, raw-file audit and city file done. Merge, validation, thresholds, cleaned dataset and visuals are **pending** (Issues #2–#7). |
 | **Two repositories** | This repo is the working and final source. A separate repo, `india-extreme-heat-submission`, holds only what the course handout asks for and is built from this one at the end. |
 | **Using an AI assistant?** | Start with [`AGENTS.md`](AGENTS.md). AI tools may be used for all parts of the project (confirmed by the course instructor); a team member must verify everything that is submitted. |
@@ -20,10 +21,10 @@ Empirical analysis of extreme daytime and nighttime temperature trends across 16
 ## Getting started
 
 ```bash
-git clone https://github.com/Akshats-S/india-extreme-heat.git
-cd india-extreme-heat
+git clone https://github.com/Akshats-S/India-Extreme-Heat-Working-.git
+cd India-Extreme-Heat-Working-
 pip install -r requirements.txt
-# Put the two IMDWeb CSVs in data/raw/ (local only, never committed), then:
+# The two raw CSVs are already in data/raw/ after cloning, then:
 python src/audit_raw_data.py
 ```
 
@@ -40,7 +41,7 @@ Then read [`CONTRIBUTING.md`](CONTRIBUTING.md) (branches and pull requests) and 
 | Min-temperature file | The CSV with a `tmin` column (identified from its header) |
 | City coordinates | [`config/cities.geojson`](config/cities.geojson) (16 city points; matches the point coordinates in both CSVs) |
 
-Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). IMD's data-supply procedure states that supplied data must not be shared with third parties, so the raw files stay local. Whether the IMDWeb download counts as open-access (the handout requires open-access data) is **open**; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md).
+Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). The raw files are committed in `data/raw/`. Whether the IMDWeb download counts as open-access (the handout requires open-access data) is **open**; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md).
 
 ## Daily maximum vs. minimum temperature
 
@@ -56,7 +57,7 @@ IMD's 1° gridded temperatures are area products, not precise urban weather-stat
 ## Repository structure
 
 ```
-india-extreme-heat/
+India-Extreme-Heat-Working-/
 ├── README.md              Overview and quick read (this file)
 ├── AGENTS.md              Instructions for AI assistants (read first)
 ├── CLAUDE.md              Pointer to AGENTS.md
@@ -68,7 +69,7 @@ india-extreme-heat/
 │   └── PULL_REQUEST_TEMPLATE.md  Pull request checklist
 ├── data/
 │   ├── README.md          Sources, download steps, file identification
-│   ├── raw/               Local-only raw IMD downloads (git-ignored)
+│   ├── raw/               Raw IMD CSVs (tmax, tmin), committed
 │   └── processed/         Pipeline outputs (git-ignored by default)
 ├── config/
 │   └── cities.geojson     The 16 city points
@@ -107,7 +108,7 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 | Step | Status |
 |------|--------|
 | Document data source and download process | Done (`data/README.md`) |
-| Obtain raw data from IMDWeb into `data/raw/` | Manual, per user, not in Git (handout wants no manual steps: **open question**) |
+| Obtain raw data from IMDWeb into `data/raw/` | Done for the team: files are committed. For the submission repo, whether raw data may be included and how to meet "no manual steps" is an **open question** |
 | Raw-file audit script | Done (`src/audit_raw_data.py`) |
 | Pin exact dependency versions | **Pending** (minimum versions only) |
 | Processing scripts for merge, validation, thresholds, cleaned dataset | **Pending** |
@@ -119,7 +120,7 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 1. Settle with the instructor/TF whether the IMDWeb data counts as open-access and whether raw files may go in the submission (see [`docs/assignment-checklist.md`](docs/assignment-checklist.md)).
 2. Confirm temperature units and observation windows from IMD documentation.
 3. Work through Issues #2–#7.
-4. If the team wants to share data publicly, confirm IMD's redistribution terms first.
+4. The raw CSVs are in this public repo by team decision. If that changes, remove them and confirm IMD's redistribution terms.
 5. Write the candidate research questions and the environmental economics relevance note ([`docs/research-questions.md`](docs/research-questions.md)), then build the separate submission repository.
 
 ## Contributing
