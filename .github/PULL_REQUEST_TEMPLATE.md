@@ -12,6 +12,7 @@ Closes #
 
 ## Checklist
 
+- [ ] No AI tool is credited as author or co-author (no Co-Authored-By or "Generated with" lines)
 - [ ] Files in data/raw/ not modified; no secrets or credentials in this PR
 - [ ] Code runs from a clean checkout (raw files are in data/raw/), or N/A
 - [ ] Docs updated; completed vs. pending work is accurate
