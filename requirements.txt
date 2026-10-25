@@ -1,7 +1,5 @@
-# Placeholder: dependencies are NOT yet finalized.
-# Pending: pin exact versions once the processing scripts in src/ are written.
-# Likely candidates (not yet confirmed by any implemented code):
-# pandas
-# numpy
-# geopandas
-# matplotlib
+# Dependencies used by code currently in src/ (minimum versions, not yet pinned)
+pandas>=2.0
+
+# Pending: pin exact versions once the pipeline is complete (Issue #7).
+# Add other packages (e.g. geopandas, matplotlib) only when code actually uses them.
