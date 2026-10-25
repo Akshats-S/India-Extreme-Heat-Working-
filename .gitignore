@@ -221,16 +221,13 @@ __marimo__/
 
 
 # ---- Project-specific rules ----
-# Raw IMD data: redistribution terms unconfirmed, keep local only
-data/raw/*
-!data/raw/.gitkeep
+# Raw IMD CSVs in data/raw/ are committed on purpose (team decision, internal use)
 # Processed data: regenerate from raw data
 data/processed/*
 !data/processed/.gitkeep
 # Common data/gridded formats that should not be committed by accident
 *.nc
 *.grd
-*.csv
 # Credentials
 .env
 *.pem

@@ -6,7 +6,7 @@ This is a small university research group project. The workflow below keeps `mai
 
 1. **Do not push directly to `main`.** All changes go through a pull request (PR) reviewed by at least one teammate. A repository rule enforces the PR requirement.
 2. **Work from an Issue.** Each task is tracked as a GitHub Issue. Comment on the Issue (or ask to be assigned) before starting so work is not duplicated.
-3. **Never commit raw IMD data** or anything under `data/raw/` (see `data/README.md`). Also never commit credentials, tokens or personal files.
+3. **Do not modify or overwrite the raw IMD CSVs** in `data/raw/` (see `data/README.md`); put derived data in `data/processed/`. Also never commit credentials, tokens or personal files.
 4. **AI tools are allowed.** The course instructor has confirmed full freedom to use AI/LLM tools. You remain responsible for everything you commit: read and verify AI-generated code and text, and never commit fabricated data or results.
 
 ## Branches

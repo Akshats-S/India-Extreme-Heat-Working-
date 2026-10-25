@@ -11,14 +11,14 @@ This file is for any AI assistant or chatbot a teammate uses on this repository 
 - **Data:** India Meteorological Department (IMD) daily gridded maximum (Tmax) and minimum (Tmin) temperature, 1 degree resolution, downloaded from IMDWeb (https://imdweb.lwcc.in/). Two CSVs, one per variable. These are gridded values, not urban weather-station readings.
 - **Deadline:** replication package due 30 November 2026. Groups of up to 3.
 - **Language/tooling:** Python 3, pandas. Dependencies live in `requirements.txt`.
-- **Two repositories:** this repository (`india-extreme-heat`) is the working and final source. A separate repository (`india-extreme-heat-submission`) will hold only what the course handout asks for, built from this one at the end. See `docs/assignment-checklist.md`.
+- **Two repositories:** this repository (`India-Extreme-Heat-Working-`) is the working and final source. A separate repository (`india-extreme-heat-submission`) will hold only what the course handout asks for, built from this one at the end. See `docs/assignment-checklist.md`.
 
 ## Rules
 
 1. **AI use is allowed for all parts of this project** (code, analysis, writing). The original handout limited AI to coding and verification, but the course instructor has since confirmed full freedom to use AI tools. The humans remain responsible: everything must be read and verified by a team member before it is relied on or submitted (the instructors will review the code).
 2. **Never invent** data, statistics, results, thresholds, or processing decisions, and never present guesses as facts. Report only what code actually outputs, and label assumptions as assumptions.
 3. **Open decisions belong to the team.** How extreme days/nights are defined, city-to-grid mapping, and similar choices are listed in `docs/methodology.md` (section 4 and 'DECISION PENDING' items). You may propose options with trade-offs, but make choices explicit parameters in code and have the team record its decision in the decision log.
-4. **Never commit raw IMD data** (anything in `data/raw/`, or any `*.csv`/`*.nc`): IMD's terms on redistribution and whether the data counts as open-access are unconfirmed. Never commit credentials or personal files.
+4. **Raw IMD CSVs are committed in `data/raw/`** (team decision: internal use; this repo is public). Do not modify or overwrite them; write all derived data to `data/processed/`. Never commit credentials or personal files.
 5. **Do not push to `main`.** Use a branch and a pull request (see `CONTRIBUTING.md`).
 6. **Keep documentation honest:** distinguish completed work from planned/pending work, and update docs when behaviour changes. Record human verification in `docs/verification-log.md`.
 
@@ -30,7 +30,7 @@ This file is for any AI assistant or chatbot a teammate uses on this repository 
 | `AGENTS.md` | This file (assistant instructions); `CLAUDE.md` and `.github/copilot-instructions.md` point here |
 | `CONTRIBUTING.md` | Branch / commit / pull request workflow |
 | `data/README.md` | Data source, download steps, which file is which |
-| `data/raw/` | Local-only raw CSVs (git-ignored) |
+| `data/raw/` | Raw IMD CSVs (tmax, tmin), committed, read-only |
 | `data/processed/` | Pipeline outputs (git-ignored by default) |
 | `config/cities.geojson` | The 16 city points (matches the point coordinates in both CSVs) |
 | `docs/data-dictionary.md` | Column definitions and observed structural facts about the raw files |
@@ -56,7 +56,7 @@ Both raw files share the key columns `time` (YYYY-MM-DD), `point_id` (0-15), `la
 
 ```bash
 pip install -r requirements.txt
-# put the two IMDWeb CSVs in data/raw/ (local only), then:
+# the two raw CSVs are already in data/raw/ after cloning, then:
 python src/audit_raw_data.py
 ```
 

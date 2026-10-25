@@ -25,12 +25,12 @@ Source: course handout *Empirical Project: Preparing a Dataset & Replication Pac
 ## Open questions to settle with the instructor/TF
 
 1. Does the IMDWeb download count as open-access / publicly available? IMD's data-supply procedure (separate from IMDWeb) says supplied data must not be shared with third parties.
-2. May the raw CSVs be included in the submitted folder? The handout asks for a self-contained folder with no manual steps; raw data is currently kept out of this public repository because redistribution terms are unconfirmed.
+2. May the raw CSVs be included in the submitted folder? Team decision for the working repo: the raw CSVs are committed in `data/raw/` for internal use (the repo is public, so they are downloadable). For the submission repo this is still to confirm. IMD's data-supply procedure says supplied data must not be shared with third parties.
 3. If raw files cannot be included, is a download script or a documented download step acceptable? (An open Python package, `imdlib`, downloads IMD gridded data by script; whether it covers the needed variables has not been checked.)
 
 ## Repository plan
 
-- **This repository (`india-extreme-heat`)** is the working and final source: all code, documentation, issues and AI-assistant instructions live here.
+- **This repository (`India-Extreme-Heat-Working-`)** is the working and final source: all code, documentation, issues and AI-assistant instructions live here.
 - **A separate submission repository (`india-extreme-heat-submission`)** will hold only what the handout asks for (README, code, candidate research questions, and data as permitted), laid out exactly as requested. It will be built from this repository once the work is finished, so that working files do not need to be stripped out later.
 
 ## Verification
