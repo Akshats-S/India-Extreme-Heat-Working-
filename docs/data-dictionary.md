@@ -45,9 +45,9 @@ Whether the one missing date needs special handling is a validation decision (Is
 
 ## Study points
 
-Coordinates and grid cells are as they appear in the files. The city names are **inferred** from the coordinates and the order of the project's city list and must be confirmed against `config/cities.geojson` (pending upload).
+Coordinates and grid cells are as they appear in the files. City names come from `config/cities.geojson`: its 16 points match the CSV point coordinates exactly, in `point_id` order (checked programmatically).
 
-| point_id | lat | lon | grid cell lat, lon (tmax file) | City (inferred) |
+| point_id | lat | lon | grid cell lat, lon (tmax file) | City (from cities.geojson) |
 |---|---|---|---|---|
 | 0 | 28.6139 | 77.2090 | 28.5, 77.5 | Delhi |
 | 1 | 26.9124 | 75.7873 | 26.5, 75.5 | Jaipur |
