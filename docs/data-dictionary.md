@@ -1,6 +1,6 @@
 # Data dictionary (raw IMDWeb files)
 
-Structural facts about the two raw CSVs, checked with `src/audit_raw_data.py`. Only structure is described here; no analysis. The raw files themselves are **not** in this repository (see `data/README.md`).
+Structural facts about the two raw CSVs, checked with `src/audit_raw_data.py`. Only structure is described here; no analysis. The raw files are in `data/raw/` (see `data/README.md`).
 
 ## Which file is which
 
