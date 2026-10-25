@@ -218,3 +218,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# ---- Project-specific rules ----
+# Raw IMD data: redistribution terms unconfirmed, keep local only
+data/raw/*
+!data/raw/.gitkeep
+# Processed data: regenerate from raw data
+data/processed/*
+!data/processed/.gitkeep
+# Common data/gridded formats that should not be committed by accident
+*.nc
+*.grd
+*.csv
+# Credentials
+.env
+*.pem
+*.key
+secrets*
