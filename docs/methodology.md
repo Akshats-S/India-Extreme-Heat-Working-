@@ -20,7 +20,7 @@ Scope: prepare a clean, reproducible dataset, document the preparation process, 
 | Files | Two CSVs, identified by header column (`tmax` / `tmin`); 140,255 rows each |
 | Units | **Not stated in files; to be confirmed from IMD documentation** |
 | Cities | Delhi, Jaipur, Ahmedabad, Mumbai, Pune, Lucknow, Patna, Kolkata, Bhopal, Nagpur, Hyderabad, Bengaluru, Chennai, Bhubaneswar, Guwahati, Kochi |
-| City coordinates | `config/cities.geojson` (pending upload); the CSVs also carry point coordinates and grid-cell coordinates |
+| City coordinates | `config/cities.geojson`; the CSVs also carry point coordinates and grid-cell coordinates |
 
 Structure and observed facts: see [`data-dictionary.md`](data-dictionary.md).
 
@@ -28,7 +28,7 @@ Limitation to document: values are gridded 1-degree products, not urban weather-
 
 ## 3. Processing pipeline
 
-1. **Raw audit** - *Partly done.* Files identified from headers; structure checked with `src/audit_raw_data.py`. Pending: confirm units, inspect `cities.geojson`, confirm city names for point IDs.
+1. **Raw audit** - *Partly done.* Files identified from headers; structure checked with `src/audit_raw_data.py`. Pending: confirm units. `cities.geojson` matches the CSV points and supplies the city names.
 2. **City-to-grid mapping** - *Pending.* The exported files already give a grid cell per point. **DECISION PENDING:** accept the export's assignment or define another approach; handling of cities near cell boundaries or coastlines.
 3. **Merge** - *Pending.* Audit shows both files have identical (time, point_id) keys. **DECISION PENDING:** final join keys and schema.
 4. **Validation** - *Pending.* Known so far: no empty cells, no duplicates, one location-date absent (point_id 14, 2005-06-26). **DECISION PENDING:** plausibility ranges, Tmin <= Tmax rule, treatment of the missing date.
