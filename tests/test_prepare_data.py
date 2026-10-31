@@ -61,7 +61,7 @@ class PreparationTests(unittest.TestCase):
     def run_cli(self, *extra):
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             return main([str(x) for x in self.paths] + ["--cities", str(self.city_path), "--config", str(self.config_path),
-                                                      "--output-dir", str(self.directory / "out"), *extra])
+                                                      "--output-dir", str(self.directory / "out"), "--skip-heat", *extra])
 
     def test_complete_panel_preserves_values_types_and_leap_day(self):
         panel, coverage, report = self.build()
@@ -255,7 +255,7 @@ class PreparationTests(unittest.TestCase):
     def test_cli_from_another_working_directory(self):
         result = subprocess.run([sys.executable, str(ROOT / "src/prepare_data.py"),
                                  *[str(p) for p in self.paths], "--cities", str(self.city_path),
-                                 "--config", str(self.config_path), "--output-dir", str(self.directory / "out")],
+                                 "--config", str(self.config_path), "--output-dir", str(self.directory / "out"), "--skip-heat"],
                                 cwd=self.directory, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 

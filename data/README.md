@@ -27,6 +27,7 @@ India Meteorological Department (IMD) daily gridded temperature, 1 degree, downl
 - Do not edit or overwrite the files in `data/raw/`. Write all derived data to `data/processed/`.
 - Run `python src/audit_raw_data.py` to re-check the raw files.
 - Run `python src/prepare_data.py` to audit, merge, validate and generate the complete city-day panel plus coverage and JSON/text validation reports in `data/processed/`. All generated files remain git-ignored. See [the preparation guide](../docs/preparation.md) for schema and configuration. No temperature values are imputed, rounded or converted.
+- The default run also fits fixed seasonal thresholds and writes daily heat flags, `heat_thresholds.csv`, `city_year_heat.csv` and `city_period_comparison.csv`. Use `--skip-heat` for the preliminary temperature-only workflow. Celsius/grid evidence is in [source-metadata.md](../docs/source-metadata.md); the method is in [methodology.md](../docs/methodology.md).
 
 ## Sharing and open-access status
 

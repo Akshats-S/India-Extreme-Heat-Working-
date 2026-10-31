@@ -7,7 +7,8 @@ Python scripts for the data-preparation pipeline. Defaults resolve from the repo
 | Script | What it does |
 |--------|--------------|
 | `audit_raw_data.py` | Read-only JSON audit using the same validation functions as preparation; nonzero exit status on important failures. |
-| `prepare_data.py` | Strict input audit, one-to-one Tmax/Tmin merge, complete city-day calendar, missing flags, validation, coverage summaries and deterministic CSV/JSON/text outputs. |
+| `prepare_data.py` | Strict raw audit, full-calendar merge and default heat workflow. Writes five CSVs plus JSON/text reports. `--skip-heat` preserves preliminary output. |
+| `heat_metrics.py` | Configurable fixed seasonal percentiles, nullable daily flags, coverage-aware annual summaries and early/late percentage-point comparisons. |
 
 ```bash
 python -m pip install -r requirements.txt
@@ -16,11 +17,11 @@ python src/audit_raw_data.py
 python -W error -m unittest discover -s tests -v
 ```
 
-## Planned (pending, not implemented)
+## Remaining work
 
 | Planned step | Corresponding issue |
 |--------------|---------------------|
-| Define extreme day/night thresholds (parameterized) | #4 |
-| Extend the preliminary cleaned dataset with agreed heat indicators | #5 (final scope) |
+| Descriptive figures and sensitivity analysis | #6 |
+| Final economics questions/documentation and submission packaging | #7 |
 
-Exact transformations, output schema, configuration, failure policy and limitations are in [the preparation guide](../docs/preparation.md). No extreme-heat definition is chosen by the preliminary pipeline. Human verification is pending.
+Exact transformations and preliminary schemas are in [the preparation guide](../docs/preparation.md); the [methodology](../docs/methodology.md), [source metadata](../docs/source-metadata.md) and [heat output schemas](../docs/heat-output-schema.md) document phases 1/2. Automated and human checks remain distinguished honestly.

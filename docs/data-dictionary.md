@@ -25,7 +25,7 @@ IMDWeb generates a different random file name on each download, so always re-ide
 | `tmax` | tmax file | Daily maximum temperature value |
 | `tmin` | tmin file | Daily minimum temperature value |
 
-**Units are not stated in either file.** Confirm against IMD documentation before using (pending). Values carry float32-style precision (e.g. 22.329999923706055) because of how they were exported.
+**Units are not stated in either file; Celsius is established from the identified IMD product documentation.** No unit conversion is made. See [source-metadata.md](source-metadata.md) for evidence and the remaining export-date limitation. Values carry float32-style precision (e.g. 22.329999923706055) because of how they were exported.
 
 ## Observed structure
 
@@ -41,7 +41,7 @@ IMDWeb generates a different random file name on each download, so always re-ide
 | Match between files on (time, point_id) | exact (140,255 of 140,255) |
 | Rows where tmin > tmax | 0 |
 
-The preliminary pipeline preserves this date in a full calendar with blank temperatures and explicit missing-record/value flags. It is the only allowed missing key in `config/preparation.json`; unexpected gaps fail validation. See [preparation.md](preparation.md) for the output schema and exact steps (Issues #2/#3, preliminary #5). Units remain unverified and no heat thresholds are included.
+The pipeline preserves this date in a full calendar with blank temperatures and missing-record/value flags. It is the only allowed missing key in `config/preparation.json`; unexpected gaps fail. The default command now includes seasonal heat indicators; `--skip-heat` retains the preliminary workflow. See [preparation.md](preparation.md) and [heat-output-schema.md](heat-output-schema.md).
 
 ## Study points
 
@@ -66,4 +66,4 @@ Coordinates and grid cells are as they appear in the files. City names come from
 | 14 | 26.1445 | 91.7362 | 26.5, 91.5 | Guwahati |
 | 15 | 9.9312 | 76.2673 | 9.5, 76.5 | Kochi |
 
-The grid-cell columns are provided by the export; the rule used to assign a point to a cell is not documented in the files (pending).
+The grid-coordinate fields are provided by the export. All 16 assignments match nearest nodes of IMD's documented grid in both variables, checked by the heat pipeline. This verifies coordinate consistency, not the interface's unpublished extraction code or city-scale representativeness.

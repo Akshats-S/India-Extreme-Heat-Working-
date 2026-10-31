@@ -1,0 +1,18 @@
+{
+  "provider": "India Meteorological Department",
+  "interface": "https://imdweb.lwcc.in/",
+  "temperature_units": "degC",
+  "maximum_product_documentation": "https://www.imdpune.gov.in/cmpg/Griddata/Max_1_Bin.html",
+  "minimum_product_documentation": "https://www.imdpune.gov.in/cmpg/Griddata/Min_1_Bin.html",
+  "product_paper": "https://www.imdpune.gov.in/cmpg/Griddata/Research%20paper.pdf",
+  "product_doi": "10.1002/asl.232",
+  "grid_latitude_min": 7.5,
+  "grid_latitude_max": 37.5,
+  "grid_longitude_min": 67.5,
+  "grid_longitude_max": 97.5,
+  "grid_step_degrees": 1,
+  "documented_missing_sentinel": 99.9,
+  "clock_time_alignment": "not established for this export; preserve source dates without shifting",
+  "network_caveat": "IMD documents fewer stations, around 180, for 2008 onward",
+  "accessed_date": "2026-10-31"
+}

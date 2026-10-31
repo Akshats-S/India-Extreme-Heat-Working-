@@ -14,10 +14,10 @@ Source: course handout *Empirical Project: Preparing a Dataset & Replication Pac
 |---|---|
 | Register topic (names, dataset, source link, question title) on the shared topic-registration sheet **before** cleaning data; avoid duplicating another group | **Done:** technical lead confirms topic registered and finalized, 2026-10-31 |
 | Dataset is open-access / publicly available; permitted project data sharing | **Project access/sharing issue resolved:** technical lead confirmation, 2026-10-31. This records the project's resolution, not a new general license grant |
-| Source website/web link cited | Done in README (IMDWeb). Full citation pending |
+| Source website/web link cited | Done: IMDWeb, IMD product pages and recommended paper citation; evidence in `docs/source-metadata.md` |
 | README: dataset source, coverage, relevance to environmental economics | Source and coverage done. **Relevance to environmental economics: pending** (team to write) |
-| README: every cleaning/preparation step, in order | Preliminary steps documented in README and `docs/preparation.md`; final heat definitions pending |
-| Code: scripts that take raw data and produce the cleaned dataset, matching the README | Preliminary audit/merge/validation/panel implemented and executed (#2/#3, preliminary #5); heat indicators and human review pending |
+| README: every cleaning/preparation step, in order | Preparation and heat method/schema documented; figures/economics/final package documentation remain |
+| Code: scripts that take raw data and produce the cleaned dataset, matching the README | Phases 1/2 implemented and tested, including fixed thresholds, daily flags and annual/period summaries (#2-#5) |
 | Reproducible with **no manual steps** | One preparation command works with raw files already local; automated fresh-copy reproduction passed. Final package assembly and reproduction remain pending. Sharing arrangements resolved by lead |
 | 2-3 candidate research questions, each with policy relevance and a course technique (valuation, instrument comparison, CBA/discounting, treatment-effect reasoning) | **Pending** (see `docs/research-questions.md`) |
 | Self-contained folder submitted | **Planned:** a separate submission repository (see below) |

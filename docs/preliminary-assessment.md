@@ -19,9 +19,9 @@ Meteorological Department (IMD) gridded maximum (Tmax) and minimum (Tmin)
 temperatures accessed through [IMDWeb](https://imdweb.lwcc.in/). It covers
 1 January 2001 to 31 December 2024 for Delhi, Jaipur, Ahmedabad, Mumbai, Pune,
 Lucknow, Patna, Kolkata, Bhopal, Nagpur, Hyderabad, Bengaluru, Chennai,
-Bhubaneswar, Guwahati and Kochi. Daily Tmax and Tmin are the proposed proxies
-for daytime and nighttime heat; units and the exact observation windows still
-need confirmation from authoritative documentation.
+Bhubaneswar, Guwahati and Kochi. Daily Tmax and Tmin are daytime/nighttime
+proxies. Celsius is established from the IMD product documentation; exact
+export clock-time alignment remains unverified and source dates are retained.
 
 The environmental economics motivation is adaptation to heat exposure. A
 comparison of daytime and nighttime patterns could inform questions about the
@@ -41,13 +41,16 @@ of which 140,255 contain both temperatures.
 
 The data represent 1-degree grid cells associated with city points, rather
 than city weather stations or direct measurements of urban heat islands.
-Extreme-heat thresholds, baseline periods and frequency measures remain team
-decisions for the next stage. No trend or causal findings are claimed in the
-preliminary dataset.
+The current repository also implements the phase 1/2 threshold and frequency
+method in `docs/methodology.md`. The earlier preliminary ZIP is a preserved
+temperature-only snapshot. No trend or causal findings are claimed in this
+topic outline.
 
 ## Deliverables available locally
 
-After running `python src/prepare_data.py` from the repository root:
+After running `python src/prepare_data.py --skip-heat` from the repository root
+for the temperature-only preliminary workflow (omit the flag to include the
+phase 2 heat variables):
 
 - `data/processed/daily_temperatures.csv`: preliminary cleaned dataset.
 - `data/processed/coverage_by_city_year.csv`: coverage for all 384 city-years.
@@ -77,7 +80,8 @@ The technical lead has confirmed the project's data-sharing arrangements are res
 - [ ] Confirm any additional preliminary-submission instructions and team details.
 - [ ] Assemble and submit the dataset, code and topic outline as instructed.
 
-Authoritative temperature metadata and the scientific grid assignment still need
-review. Extreme-heat indicators and the 2-3 final candidate research questions
-are future work; they are not required for the preliminary scope described in
-the team handoff. The final assessment is due 30 November 2026.
+Source documentation and nearest-grid consistency checks now establish the
+phase 1 measurement contract, with explicit date-alignment and spatial limits.
+Heat indicators are implemented; the 2-3 final candidate research questions
+remain phase 4 work and are outside the preliminary scope in the team handoff.
+The final assessment is due 30 November 2026.

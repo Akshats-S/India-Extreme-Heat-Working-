@@ -7,13 +7,19 @@ verification records must distinguish executed tests from human sign-off.
 
 ## Foundation completed
 
-The preliminary daily panel, read-only audit, validation reports, coverage
-table, preparation command, 20 passing tests and brief topic outline exist.
+The daily panel, read-only audit, validation reports, coverage table, heat
+workflow, 34 passing tests and brief topic outline exist.
 The panel has 140,256 rows over 16 cities and 8,766 days; the sole missing
 Guwahati date is explicit. The November 6 preliminary materials are prepared;
-assessment-specific final packaging and submission still need to happen.
+the preliminary ZIP was assembled and tested locally. Submission itself has
+not been performed. Final-assessment packaging remains phase 5.
 
 ## Phase 1: finalize the measurement method
+
+**Completed as a documented project method.** Celsius/grid evidence and QC are
+recorded; the exact export clock-time alignment could not be established and
+is handled by preserving source dates and describing Tmin as a proxy. See
+`source-metadata.md` and `methodology.md` for all decisions and limitations.
 
 - Confirm IMD temperature units, observation windows and the interpretation
   of the exported grid-cell coordinates from authoritative sources.
@@ -29,6 +35,10 @@ Output: a cited method and recorded analytical choices. Existing preparation
 continues to run without prematurely fixing these choices.
 
 ## Phase 2: generate the final research variables
+
+**Implemented and executed.** Default preparation now includes fixed seasonal
+thresholds, nullable daily flags, 384 city-year summaries and 16 early/late
+comparisons. Schemas and coverage rules are in `heat-output-schema.md`.
 
 - Implement the agreed thresholds and daily extreme-day/extreme-night flags.
 - Produce city-year counts and shares with observed-day denominators, so a

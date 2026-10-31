@@ -8,7 +8,7 @@ The handout asks every group member to verify each step of the code, because AI 
 | `config/cities.geojson` | 16 city points match the point coordinates in both CSVs, in point_id order | AI assistant compared programmatically | _human verification pending_ | |
 | `src/prepare_data.py`, audit wrapper and `tests/test_prepare_data.py` | Strict parsing, full-calendar merge, missingness, coordinate/grid consistency, error exit statuses, optional bounds, precision, reproducibility and raw-file preservation | Automated checks described below | _human verification pending_ | 2026-10-31 |
 
-## Automated checks executed on 2026-10-31
+## Preliminary-stage automated checks executed on 2026-10-31
 
 Workflow clarification received later on 2026-10-31: the technical lead confirms
 there is no separate teammate approval requirement for the lead's own work.
@@ -53,6 +53,53 @@ code and verify the outputs before submission.
 - Dependencies in `requirements.txt` match the installed versions. Tested with
   Python 3.12.10, pandas 3.0.5 and numpy 2.4.4. No new isolated environment was
   installed; this is not a claim to have tested every Python/platform version.
-- Human verification, authoritative metadata confirmation, scientific review
-  of the exported grid assignment, extreme-heat definitions and final
-  submission data-sharing/access arrangements remain pending.
+- At this preliminary snapshot, metadata, scientific measurement choices and
+  final data-access arrangements were pending. Later project confirmations
+  and phase 1/2 results below supersede that status; the execution record above
+  remains a record of the earlier temperature-only implementation.
+
+## Phase 1/2 checks executed on 2026-10-31
+
+- Source evidence checked: IMD maximum/minimum product pages and the cited
+  product paper; ETCCDI definitions; NumPy quantile documentation; climdex.pcic
+  defaults/source. Sources and their limits are recorded in
+  `docs/source-metadata.md` and `docs/methodology.md`.
+- `python -W error -m unittest discover -s tests -v`: **34 tests passed**, none
+  skipped. The final pass ran from a fresh local clone with implementation
+  changes applied, with warnings treated as errors. The suite includes the
+  20 preparation tests plus 14 heat/real-data checks: a hand-calculated type-8
+  quantile, strict exceedance ties, circular seasonal windows, city separation,
+  reference-period isolation, February 29 exclusion/interpolation, nullable
+  flags, paired denominators, annual/monthly quality suppression, partial
+  calendars, insufficient reference coverage, invalid configs, documented IMD
+  sentinel/grid checks, deterministic CLI output and real-data reconciliation.
+- The default preparation command produced **140,256 daily rows with 21
+  columns**, **5,856 thresholds**, **384 city-years**, **16 period comparisons**,
+  coverage and JSON/text reports. Actual event totals: 13,756 warm-day flags,
+  13,738 warm-night flags and 4,032 same-source-date co-exceedances. These are
+  output-validation counts, not a standalone scientific finding.
+- The sole missing temperature pair, Guwahati 2005-06-26, has missing (not
+  False) day/night/compound indicators. Guwahati 2005 uses 364 paired observed
+  dates. All 384 city-years pass the configured coverage rules.
+- Source-contract validation passed **64 nearest-grid coordinate checks**
+  (16 cities x 2 variables x 2 coordinate axes), with zero mismatches.
+- A fresh clone with the changes applied ran the command twice from outside
+  the repository. **All seven output files were byte-identical between runs.**
+  The audit wrote nothing, and `--skip-heat` still generated the original four
+  preliminary files into a separate output directory.
+- Every exported Tmax/Tmin was compared with the original CSVs using
+  round-trip parsing: no numerical changes. Exported annual event counts were
+  independently reconciled against the exported daily flags, and every city's
+  early/late percentages were independently recomputed using paired dates.
+  Original raw-file fingerprints stayed unchanged in both working copies.
+- Extended daily dataset SHA-256:
+  `53af34914e1307f3784123b71f725c9be01ec3a4e2200ba5fcf9072da104f1a1`.
+- Compilation and `git diff --check` passed. Generated data/report files remain
+  git-ignored. Environment: Python 3.12.10, pandas 3.0.5, NumPy 2.4.4; existing
+  pinned requirements are sufficient. No new isolated environment was created.
+- The technical lead authorized completing phases 1/2 and does not require
+  separate teammate approval. No independent human sign-off is invented.
+  Exact export clock-time alignment, the post-2008 station-network change,
+  regional spatial representation and the retrospective 24-year reference
+  remain disclosed interpretation limitations. Figures, sensitivity analysis,
+  economics questions and final packaging remain phases 3-5.

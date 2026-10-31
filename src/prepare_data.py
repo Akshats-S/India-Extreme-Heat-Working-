@@ -17,6 +17,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from heat_metrics import HEAT_OUTPUT_NAMES, build_heat_outputs, load_heat_settings, validate_imd_grid
+
 ROOT = Path(__file__).resolve().parents[1]
 KEY = ["point_id", "date"]
 OUTPUT_COLUMNS = [
@@ -26,7 +28,7 @@ OUTPUT_COLUMNS = [
     "tmax_missing", "tmin_missing", "temperature_pair_complete",
 ]
 OUTPUT_NAMES = ["daily_temperatures.csv", "validation_report.json",
-                "validation_report.txt", "coverage_by_city_year.csv"]
+                "validation_report.txt", "coverage_by_city_year.csv", *HEAT_OUTPUT_NAMES]
 MISSING_TOKENS = {"", "na", "nan", "null", "none", "n/a"}
 
 
@@ -218,7 +220,7 @@ def build_panel(paths, cities_path, settings_path, lower=None, upper=None, repor
     report.update({"schema_version": 1, "settings": settings,
                    "cities_sha256": sha256(cities_path), "config_sha256": sha256(settings_path),
                    "software": {"python": platform.python_version(), "pandas": pd.__version__},
-                   "units": "unverified; original numerical scale retained"})
+                   "units": "as supplied; raw CSVs do not contain unit metadata"})
     if len(paths) != 2:
         raise ValidationError(f"Expected exactly two raw CSVs; found {len(paths)}.")
     frames = {}
@@ -285,7 +287,7 @@ def build_panel(paths, cities_path, settings_path, lower=None, upper=None, repor
         missing_tmax_records=("tmax_record_missing", "sum"), missing_tmin_records=("tmin_record_missing", "sum"),
         missing_tmax_values=("tmax_missing", "sum"), missing_tmin_values=("tmin_missing", "sum"),
         complete_pairs=("temperature_pair_complete", "sum"))
-    message = "Temperature units and observation windows remain unverified; the original numerical scale is retained."
+    message = "Raw CSVs omit units and clock-time alignment; see the project source metadata. No numerical conversion is performed."
     if settings["temperature_min"] is None and settings["temperature_max"] is None:
         message += " Physical plausibility bounds are unset; no absolute-temperature cutoff has been applied."
     add_issue(report, "metadata_pending", message, severity="warning")
@@ -313,7 +315,7 @@ def csv_text(frame):
 
 
 def summary_text(report):
-    lines = ["IMD preliminary preparation validation", "Status: " + report.get("status", "failed"),
+    lines = ["IMD temperature preparation validation", "Status: " + report.get("status", "failed"),
              "Dataset published by this run: " + str(report.get("dataset_published", False))]
     if "panel" in report:
         p = report["panel"]
@@ -321,12 +323,16 @@ def summary_text(report):
                   f"Complete temperature pairs: {p['complete_temperature_pairs']:,}; missing Tmax: {p['missing_tmax']}; missing Tmin: {p['missing_tmin']}."]
     if "merge" in report:
         lines.append("Source-record matches: " + json.dumps(report["merge"], sort_keys=True))
+    if "heat_metrics" in report:
+        heat = report["heat_metrics"]
+        lines.append(f"Heat outputs: {heat['threshold_rows']:,} threshold rows; {heat['annual_rows']} city-years; {heat['period_comparison_rows']} city comparisons.")
+        lines.append(f"Flagged observations: {heat['extreme_day_count']:,} warm days; {heat['extreme_night_count']:,} warm nights; {heat['compound_extreme_count']:,} same-source-date co-exceedances.")
     for group in ("errors", "warnings"):
         for issue in report[group]:
             lines.append(f"{group.upper()}: {issue['code']} ({issue['count']}): {issue['message']}")
     if report.get("status") == "failed":
         lines.append("No new validated dataset is available from this run. Existing CSVs may belong to an earlier run.")
-    lines.append("Human code/output verification remains pending. Extreme-heat indicators are not included.")
+    lines.append("Automated verification is recorded; no human sign-off is claimed.")
     return "\n".join(lines) + "\n"
 
 
@@ -335,6 +341,9 @@ def main(argv=None, audit_only=False):
     parser.add_argument("raw_files", nargs="*", type=Path, help="Two source CSVs, in either order; defaults to data/raw/*.csv.")
     parser.add_argument("--cities", type=Path, default=ROOT / "config/cities.geojson")
     parser.add_argument("--config", type=Path, default=ROOT / "config/preparation.json")
+    parser.add_argument("--heat-config", type=Path, default=ROOT / "config/heat_metrics.json")
+    parser.add_argument("--source-metadata", type=Path, default=ROOT / "config/source_metadata.json")
+    parser.add_argument("--skip-heat", action="store_true", help="Produce only the preliminary temperature panel and coverage.")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data/processed")
     parser.add_argument("--temperature-min", type=float, help="Explicit lower QC bound in source units; no default.")
     parser.add_argument("--temperature-max", type=float, help="Explicit upper QC bound in source units; no default.")
@@ -346,7 +355,7 @@ def main(argv=None, audit_only=False):
     if not audit_only:
         output_dir = args.output_dir.resolve()
         raw_dir = (ROOT / "data/raw").resolve()
-        protected = {p.resolve() for p in [*paths, args.cities, args.config]}
+        protected = {p.resolve() for p in [*paths, args.cities, args.config, args.heat_config, args.source_metadata]}
         if output_dir == raw_dir or raw_dir in output_dir.parents or any((output_dir / n).resolve() in protected for n in OUTPUT_NAMES):
             print("ERROR: output directory could overwrite raw inputs or configuration.", file=sys.stderr)
             return 2
@@ -354,12 +363,37 @@ def main(argv=None, audit_only=False):
         panel, coverage, report = build_panel(paths, args.cities, args.config,
                                              args.temperature_min, args.temperature_max, report)
         if not audit_only:
-            dataset = csv_text(panel)
-            atomic_text(args.output_dir / "daily_temperatures.csv", dataset)
-            atomic_text(args.output_dir / "coverage_by_city_year.csv", csv_text(coverage))
+            frames = {"coverage_by_city_year.csv": coverage}
+            if not args.skip_heat:
+                settings = load_heat_settings(args.heat_config)
+                metadata = json.loads(args.source_metadata.read_text(encoding="utf-8-sig"))
+                report["source_grid"] = validate_imd_grid(panel, metadata, report["settings"]["coordinate_tolerance"])
+                panel, thresholds, annual, comparison, heat = build_heat_outputs(panel, settings)
+                frames.update({"heat_thresholds.csv": thresholds, "city_year_heat.csv": annual,
+                               "city_period_comparison.csv": comparison})
+                report["heat_metrics"] = heat
+                report["heat_config_sha256"] = sha256(args.heat_config)
+                report["source_metadata_sha256"] = sha256(args.source_metadata)
+                report["source_metadata"] = metadata
+                report["units"] = metadata["temperature_units"]
+                report["warnings"] = [item for item in report["warnings"] if item["code"] != "metadata_pending"]
+                add_issue(report, "source_date_alignment", "Exact clock-time alignment is not established for this export; retain source dates and use Tmin as a nighttime proxy.", severity="warning")
+                add_issue(report, "reference_method", "Project-relative percentiles use the configured available-data baseline and no ETCCDI bootstrap; these are not official ETCCDI or IMD heatwave indices.", severity="warning")
+                add_issue(report, "source_network_change", metadata["network_caveat"], severity="warning")
+                if heat["ineligible_paired_city_years"]:
+                    add_issue(report, "ineligible_city_years", "Annual percentages are suppressed for city-years failing coverage rules.", heat["ineligible_paired_city_years"], severity="warning")
+                report["status"] = "passed_with_warnings" if report["warnings"] else "passed"
+            frames = {"daily_temperatures.csv": panel, **frames}
+            # Validate and serialize everything before publishing any data file.
+            serialized = {name: csv_text(frame) for name, frame in frames.items()}
+            fingerprints = {}
+            for name, text in serialized.items():
+                atomic_text(args.output_dir / name, text)
+                fingerprints[name] = hashlib.sha256(text.encode("utf-8")).hexdigest()
             report["dataset_published"] = True
-            report["output"] = {"file": "daily_temperatures.csv", "sha256": hashlib.sha256(dataset.encode("utf-8")).hexdigest(),
-                                "columns": OUTPUT_COLUMNS, "dtypes": {col: str(panel[col].dtype) for col in panel}}
+            report["output"] = {"file": "daily_temperatures.csv", "sha256": fingerprints["daily_temperatures.csv"],
+                                "files_sha256": fingerprints, "columns": panel.columns.tolist(),
+                                "dtypes": {col: str(panel[col].dtype) for col in panel}}
     except (ValueError, OSError, KeyError, TypeError, OverflowError, csv.Error) as exc:
         if not report["errors"]:
             add_issue(report, "input_or_output_failure", str(exc))

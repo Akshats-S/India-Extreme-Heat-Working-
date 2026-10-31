@@ -1,0 +1,13 @@
+{
+  "baseline_start_year": 2001,
+  "baseline_end_year": 2024,
+  "percentile": 90,
+  "window_days": 5,
+  "quantile_method": "median_unbiased",
+  "minimum_baseline_years": 10,
+  "minimum_window_coverage": 0.9,
+  "annual_max_missing_days": 15,
+  "monthly_max_missing_days": 3,
+  "early_period": [2001, 2005],
+  "late_period": [2020, 2024]
+}

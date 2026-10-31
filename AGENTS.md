@@ -41,13 +41,13 @@ This file is for any AI assistant or chatbot a teammate uses on this repository 
 | `docs/assignment-checklist.md` | Course handout requirements vs. status, open questions for the instructor |
 | `docs/research-questions.md` | Template for the 2-3 candidate research questions the handout requires |
 | `docs/verification-log.md` | Record of human verification of each step |
-| `src/` | Preliminary preparation: `prepare_data.py`; read-only audit wrapper: `audit_raw_data.py`. Guide: `docs/preparation.md`; settings: `config/preparation.json`; tests: `tests/` |
+| `src/` | Preparation: `prepare_data.py`; heat methods: `heat_metrics.py`; read-only audit: `audit_raw_data.py`. Config: preparation/heat_metrics/source_metadata JSON. Guides: preparation, methodology, source-metadata and heat-output-schema under docs/; tests under tests/ |
 | `notebooks/` | Exploration notebooks (none yet) |
 | `outputs/figures/` | Generated figures (none yet) |
 
 ## Raw data schema (details in docs/data-dictionary.md)
 
-Both raw files share the key columns `time` (YYYY-MM-DD), `point_id` (0-15), `lat`, `lon` (city point). The max file adds `tmax_cell_lat`, `tmax_cell_lon`, `tmax`; the min file adds `tmin_cell_lat`, `tmin_cell_lon`, `tmin`. Identify a file by its value column (`tmax` or `tmin`), never by its filename. Units are not stated in the files. `point_id` 0-15 follows the order of the city list above and of `config/cities.geojson`.
+Both raw files share the key columns `time` (YYYY-MM-DD), `point_id` (0-15), `lat`, `lon` (city point). The max file adds `tmax_cell_lat`, `tmax_cell_lon`, `tmax`; the min file adds `tmin_cell_lat`, `tmin_cell_lon`, `tmin`. Identify a file by its value column (`tmax` or `tmin`), never by its filename. The files omit units, but IMD product documentation establishes Celsius (see docs/source-metadata.md); exact export clock-time alignment remains unverified. `point_id` 0-15 follows the order of the city list above and of `config/cities.geojson`.
 
 ## Known data facts (verified by `src/audit_raw_data.py`)
 
