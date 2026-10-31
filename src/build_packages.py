@@ -1,3 +1,4 @@
+# Builds and checks the preliminary and final submission ZIP files.
 """Build and verify separate preliminary/final self-contained submission ZIPs.
 
 Runs the bundled commands from fresh staging/extracted copies. Never changes
@@ -127,8 +128,8 @@ def copy_sources(staging, mode):
             + (f"Section: {section}\n\n" if section else "")
             + f"Deadline: {metadata[mode + '_deadline']}\n",
             encoding="utf-8")
-    shutil.copy2(ROOT / "docs/topic-outline.md", staging / "TOPIC_OUTLINE.md")
     if mode == "final":
+        shutil.copy2(ROOT / "docs/topic-outline.md", staging / "TOPIC_OUTLINE.md")
         shutil.copy2(ROOT / "docs/research-questions.md", staging / "RESEARCH_QUESTIONS.md")
     return bool(members)
 

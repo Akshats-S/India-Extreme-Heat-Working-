@@ -1,3 +1,5 @@
+Data source: [India Meteorological Department, via IMDWeb](https://imdweb.lwcc.in/).
+
 # Extreme daytime and nighttime heat across Indian cities
 
 Introduction to Environmental Economics, AY 2026-27.

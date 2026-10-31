@@ -1,3 +1,4 @@
+# Defines heat thresholds and calculates warm-day and warm-night frequencies.
 """Project-relative, seasonally adjusted warm-day/night indicators.
 
 Definitions and departures from official ETCCDI indices are explicit in

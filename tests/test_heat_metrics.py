@@ -1,3 +1,4 @@
+# Tests the heat thresholds and warm-day and warm-night calculations.
 """Independent known-answer and failure checks for the heat measurement method."""
 
 import contextlib

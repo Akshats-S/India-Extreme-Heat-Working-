@@ -61,7 +61,7 @@ limitations. No causal policy, mortality, demand or welfare effect is estimated.
 `Submissions` directory. It copies an explicit source/documentation whitelist,
 regenerates outputs twice in a fresh staging folder, runs the complete tests,
 checks raw-file preservation, builds and extracts each ZIP, and verifies exact
-regeneration from the extracted copy. The preliminary hand-in contains nine
+regeneration from the extracted copy. The preliminary hand-in contains eight
 essential files; its tests and file fingerprints remain outside the hand-in
 in the working project's build report. The final package includes its tests,
 manifest and verification records. Preliminary tests run from the working

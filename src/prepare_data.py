@@ -1,8 +1,5 @@
-"""Audit, merge and validate IMD city-day temperatures without altering raw files.
-
-Run ``python src/prepare_data.py --help`` for configurable paths and options.
-Only pandas and the Python standard library are required.
-"""
+# Merges Tmax and Tmin, checks the data, and saves the daily dataset.
+"""Prepare and validate the daily temperature dataset."""
 
 import argparse
 import csv
@@ -331,7 +328,6 @@ def summary_text(report):
             lines.append(f"{group.upper()}: {issue['code']} ({issue['count']}): {issue['message']}")
     if report.get("status") == "failed":
         lines.append("No new validated dataset is available from this run. Existing CSVs may belong to an earlier run.")
-    lines.append("Automated verification is recorded; no human sign-off is claimed.")
     return "\n".join(lines) + "\n"
 
 
