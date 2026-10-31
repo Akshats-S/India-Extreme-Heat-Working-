@@ -129,14 +129,17 @@ class PackageIntegrityTests(unittest.TestCase):
             self.assertEqual(daily.shape, (140256, 16))
             self.assertEqual(int(daily.temperature_pair_complete.sum()), 140255)
 
-    def test_package_includes_city_mapping_and_sources_needed_to_rebuild(self):
+    def test_final_includes_runtime_inputs_without_development_scaffolding(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             copy_sources(root, "final")
             for name in ("config/cities.geojson", "config/heat_metrics.json", "config/source_metadata.json",
-                         "src/run_project.py", "docs/topic-outline.md", "docs/package-templates/README-final.txt",
-                         "TOPIC_OUTLINE.md", "RESEARCH_QUESTIONS.md", "README.md"):
+                         "src/run_project.py", "src/prepare_data.py", "src/heat_metrics.py", "src/analyze_data.py",
+                         "docs/handout/Instructions.pdf", "RESEARCH_QUESTIONS.md", "README.md"):
                 self.assertTrue((root / name).is_file(), name)
+            for name in ("tests", "docs/package-templates", "src/build_packages.py", "src/audit_raw_data.py",
+                         "COVER.md", "TOPIC_OUTLINE.md", "requirements-preliminary.txt", "config/submission.json"):
+                self.assertFalse((root / name).exists(), name)
 
     def test_manifest_detects_altered_or_extra_files(self):
         with tempfile.TemporaryDirectory() as temporary:
