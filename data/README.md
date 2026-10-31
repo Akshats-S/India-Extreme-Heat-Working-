@@ -26,9 +26,10 @@ India Meteorological Department (IMD) daily gridded temperature, 1 degree, downl
 
 - Do not edit or overwrite the files in `data/raw/`. Write all derived data to `data/processed/`.
 - Run `python src/audit_raw_data.py` to re-check the raw files.
+- Run `python src/prepare_data.py` to audit, merge, validate and generate the complete city-day panel plus coverage and JSON/text validation reports in `data/processed/`. All generated files remain git-ignored. See [the preparation guide](../docs/preparation.md) for schema and configuration. No temperature values are imputed, rounded or converted.
 
 ## Sharing and open-access status
 
 The team decided to keep the raw CSVs in this repository for internal use. Be aware that this repository is public, so the files are downloadable by anyone, and IMD's data-supply procedure says supplied data must not be shared with third parties.
 
-Still open for the submission repo: the course handout requires open-access data and a self-contained folder with no manual steps. Whether IMDWeb data counts as open-access, and whether the raw files may go in the submission, is not confirmed with the instructor/TF. See [`docs/assignment-checklist.md`](../docs/assignment-checklist.md).
+Update, 2026-10-31: the technical lead confirms that the project's data-sharing issue is resolved. Final packaging must follow those arrangements and include source attribution. This records the project-specific resolution; it does not assert a new general redistribution license. See [`docs/assignment-checklist.md`](../docs/assignment-checklist.md).

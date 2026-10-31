@@ -1,6 +1,6 @@
 # Methodology (technical outline)
 
-> **Status: outline.** Only the raw-file audit (step 1) has been done. No analytical decision below has been made unless explicitly marked *Decided*. Items labelled **DECISION PENDING** must be resolved by the team and recorded here with a date and rationale.
+> **Status:** preliminary preparation is implemented and executed; human review is pending. The technical lead requested the merge, complete flagged calendar, validation and reproducible command on 2026-10-31. Analytical choices for extreme-heat definitions remain open. Exact implemented transformations and configurable settings are in [preparation.md](preparation.md).
 
 ## 1. Research question
 
@@ -28,12 +28,12 @@ Limitation to document: values are gridded 1-degree products, not urban weather-
 
 ## 3. Processing pipeline
 
-1. **Raw audit** - *Partly done.* Files identified from headers; structure checked with `src/audit_raw_data.py`. Pending: confirm units. `cities.geojson` matches the CSV points and supplies the city names.
-2. **City-to-grid mapping** - *Pending.* The exported files already give a grid cell per point. **DECISION PENDING:** accept the export's assignment or define another approach; handling of cities near cell boundaries or coastlines.
-3. **Merge** - *Pending.* Audit shows both files have identical (time, point_id) keys. **DECISION PENDING:** final join keys and schema.
-4. **Validation** - *Pending.* Known so far: no empty cells, no duplicates, one location-date absent (point_id 14, 2005-06-26). **DECISION PENDING:** plausibility ranges, Tmin <= Tmax rule, treatment of the missing date.
+1. **Raw audit** - *Implemented.* Shared strict checks in `src/prepare_data.py`; `src/audit_raw_data.py` exposes a read-only audit. Schema, row width, dates, IDs, duplicates, numeric values and coordinates are validated. Units/observation windows and human review remain pending.
+2. **City-to-grid mapping** - Exported Tmax/Tmin cell coordinates are retained separately and checked for within-point constancy and cross-file agreement. Point coordinates must match `cities.geojson` within 0.000001 degrees. No new spatial assignment is calculated. **DECISION PENDING:** scientific suitability of the exported cells, especially near boundaries/coastlines.
+3. **Merge** - *Implemented.* One-to-one joins on `(point_id, date)` after renaming `time`. This matches the export's point identity and avoids floating-point coordinates as keys; coordinates are independently validated. City names and canonical point coordinates come from GeoJSON feature order.
+4. **Validation** - *Implemented for preliminary preparation.* Reject duplicates, invalid dates/IDs/numbers, out-of-period records, coordinate disagreement, unexpected gaps and Tmin above Tmax. Build the full calendar (including leap days); the known absent Guwahati key remains blank and flagged. Only keys explicitly whitelisted in `config/preparation.json` are permitted missing-record warnings. No imputation or deletion. Physical plausibility bounds remain **DECISION PENDING**, disabled by default and configurable; metadata warnings remain visible.
 5. **Extreme definitions** - see section 4.
-6. **Output** - *Pending.* Write cleaned dataset to `data/processed/`. **DECISION PENDING:** file format and column schema.
+6. **Output** - *Implemented for preliminary preparation.* A deterministic CSV panel, city-year coverage CSV and JSON/text validation reports are written to `data/processed/`. Exact schema is in [preparation.md](preparation.md). Heat indicators await the decisions below.
 7. **Exploratory outputs** - *Pending.* Figures and summary statistics in `outputs/`.
 
 ## 4. Defining extreme days and nights - DECISIONS PENDING
@@ -55,13 +55,13 @@ Each choice, with its rationale, is recorded here once made (tracked in Issue #4
 
 ## 5. Other open questions
 
-- Handling of leap days and calendar alignment
-- Missing-data tolerance per city-year
-- Software environment and version pinning
+- Leap days are retained in preliminary preparation; threshold calendar treatment remains open.
+- Missing-data tolerance for later annual heat-event metrics remains open; preparation flags all gaps.
+- Preliminary dependencies are pinned; final dependencies may expand when heat indicators/figures are implemented.
 - License and data attribution text
 
 ## 6. Decision log
 
 | Date | Decision | Rationale | Decided by |
 |------|----------|-----------|------------|
-| _none yet_ | | | |
+| 2026-10-31 | Preliminary merge uses point_id/date, retains exported grid metadata, builds the full calendar and flags known gaps without imputation. CSV/JSON/text outputs with stable ordering; no heat thresholds or unit conversion. | Implements the technical lead's requested preliminary pipeline while preserving original values and making missingness visible. Policy is explicit in config and the preparation guide. | Technical lead requested implementation; code/output human review pending |

@@ -41,7 +41,7 @@ IMDWeb generates a different random file name on each download, so always re-ide
 | Match between files on (time, point_id) | exact (140,255 of 140,255) |
 | Rows where tmin > tmax | 0 |
 
-Whether the one missing date needs special handling is a validation decision (Issue #3).
+The preliminary pipeline preserves this date in a full calendar with blank temperatures and explicit missing-record/value flags. It is the only allowed missing key in `config/preparation.json`; unexpected gaps fail validation. See [preparation.md](preparation.md) for the output schema and exact steps (Issues #2/#3, preliminary #5). Units remain unverified and no heat thresholds are included.
 
 ## Study points
 

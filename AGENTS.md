@@ -23,6 +23,7 @@ This file is for any AI assistant or chatbot a teammate uses on this repository 
 4. **Raw IMD CSVs are committed in `data/raw/`** (team decision: internal use; this repo is public). Do not modify or overwrite them; write all derived data to `data/processed/`. Never commit credentials or personal files.
 5. **Do not push to `main`.** Use a branch and a pull request (see `CONTRIBUTING.md`).
 6. **Keep documentation honest:** distinguish completed work from planned/pending work, and update docs when behaviour changes. Record human verification in `docs/verification-log.md`.
+7. **Review workflow clarified by the technical lead on 2026-10-31:** teammate contributions are reviewed by the technical lead (`Akshats-S`). The lead's own work does not require a separate teammate approval. Continue using feature branches and pull requests, run the relevant automated checks, and integrate authorized work without waiting for an external reviewer. Do not describe automated checks as completed human verification.
 
 ## Repository map
 
@@ -40,7 +41,7 @@ This file is for any AI assistant or chatbot a teammate uses on this repository 
 | `docs/assignment-checklist.md` | Course handout requirements vs. status, open questions for the instructor |
 | `docs/research-questions.md` | Template for the 2-3 candidate research questions the handout requires |
 | `docs/verification-log.md` | Record of human verification of each step |
-| `src/` | Pipeline code. Implemented so far: `audit_raw_data.py` |
+| `src/` | Preliminary preparation: `prepare_data.py`; read-only audit wrapper: `audit_raw_data.py`. Guide: `docs/preparation.md`; settings: `config/preparation.json`; tests: `tests/` |
 | `notebooks/` | Exploration notebooks (none yet) |
 | `outputs/figures/` | Generated figures (none yet) |
 
@@ -57,9 +58,11 @@ Both raw files share the key columns `time` (YYYY-MM-DD), `point_id` (0-15), `la
 ## Common commands
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 # the two raw CSVs are already in data/raw/ after cloning, then:
 python src/audit_raw_data.py
+python src/prepare_data.py
+python -W error -m unittest discover -s tests -v
 ```
 
 ## Work plan
@@ -71,5 +74,5 @@ Work is tracked as GitHub Issues #1-#7 (audit, merge, validate, define threshold
 - Code runs from a clean checkout (given the raw files locally).
 - No data files or secrets in the diff.
 - Docs updated; pending vs done is accurate.
-- A person has read and verified AI-written code (log it in `docs/verification-log.md`).
+- Verification evidence is recorded honestly in `docs/verification-log.md`; do not invent human sign-off. Separate teammate approval is not a gate for the technical lead's own work.
 - Opened as a pull request linked to its Issue.

@@ -16,7 +16,7 @@ Empirical analysis of extreme daytime and nighttime temperature trends across 16
 | **Data** | IMD daily gridded maximum (Tmax) and minimum (Tmin) temperature, 1° resolution, from [IMDWeb](https://imdweb.lwcc.in/). Two CSVs (one per variable), 140,255 rows each. |
 | **Raw data in Git?** | **Yes.** The two raw IMD CSVs are committed in `data/raw/` for team use. This repo is public, so they are publicly downloadable. See [`data/README.md`](data/README.md). |
 | **Course handout** | [`docs/handout/Instructions.pdf`](docs/handout/Instructions.pdf) |
-| **Status** | Scaffold, documentation, raw-file audit and city file done. Merge, validation, thresholds, cleaned dataset and visuals are **pending** (Issues #2–#7). |
+| **Status** | Preliminary audit, merge, validation and cleaned temperature panel implemented (Issues #2, #3 and preliminary #5); human review pending. Extreme-heat definitions and final outputs remain pending. |
 | **Two repositories** | This repo is the working and final source. A separate repo, `india-extreme-heat-submission`, holds only what the course handout asks for and is built from this one at the end. |
 | **Using an AI assistant?** | Start with [`AGENTS.md`](AGENTS.md). AI tools may be used for all parts of the project (confirmed by the course instructor); a team member must verify everything that is submitted. |
 
@@ -25,12 +25,16 @@ Empirical analysis of extreme daytime and nighttime temperature trends across 16
 ```bash
 git clone https://github.com/Akshats-S/India-Extreme-Heat-Working-.git
 cd India-Extreme-Heat-Working-
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 # The two raw CSVs are already in data/raw/ after cloning, then:
-python src/audit_raw_data.py
+python src/prepare_data.py
 ```
 
-Then read [`CONTRIBUTING.md`](CONTRIBUTING.md) (branches and pull requests) and pick an open Issue.
+This audits, merges and validates both raw files, then writes `data/processed/daily_temperatures.csv`, JSON/text validation reports and city-year coverage. The panel has 140,256 rows; Guwahati, 2005-06-26 remains blank and explicitly flagged. Raw data is unchanged. See [the preparation guide](docs/preparation.md) for every transformation, schema, options and failure policy.
+
+Read-only audit: `python src/audit_raw_data.py`. Tests: `python -W error -m unittest discover -s tests -v`. Tests include synthetic faulty inputs and real-data acceptance checks when raw files are available. Human verification remains pending. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) for branches and pull requests.
+
+The [preliminary assessment note](docs/preliminary-assessment.md) contains the brief topic outline, available deliverables and the remaining team/submission checks for November 6.
 
 ## Data provenance
 
@@ -43,7 +47,7 @@ Then read [`CONTRIBUTING.md`](CONTRIBUTING.md) (branches and pull requests) and 
 | Min-temperature file | The CSV with a `tmin` column (identified from its header) |
 | City coordinates | [`config/cities.geojson`](config/cities.geojson) (16 city points; matches the point coordinates in both CSVs) |
 
-Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). The raw files are committed in `data/raw/`. Whether the IMDWeb download counts as open-access (the handout requires open-access data) is **open**; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md).
+Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). The raw files are committed in `data/raw/`. The technical lead confirmed topic registration/finalization and resolution of the project's data-sharing issue on 2026-10-31; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md). Separate teammate approval is not required for the lead's own work.
 
 ## Daily maximum vs. minimum temperature
 
@@ -74,10 +78,13 @@ India-Extreme-Heat-Working-/
 │   ├── raw/               Raw IMD CSVs (tmax, tmin), committed
 │   └── processed/         Pipeline outputs (git-ignored by default)
 ├── config/
-│   └── cities.geojson     The 16 city points
+│   ├── cities.geojson     The 16 city points
+│   └── preparation.json   Dates, coordinate tolerance and explicit missing-record policy
 ├── src/
 │   ├── README.md
-│   └── audit_raw_data.py  Structural audit of the raw CSVs
+│   ├── audit_raw_data.py  Read-only audit using the preparation checks
+│   └── prepare_data.py    Audit, merge, validate and write the daily panel
+├── tests/                Synthetic edge cases and real-data acceptance checks
 ├── notebooks/             Exploration notebooks (none yet)
 ├── outputs/
 │   └── figures/           Generated figures (none yet)
@@ -98,10 +105,10 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 | # | Step | Status |
 |---|------|--------|
 | 1 | Audit and document the raw datasets | **Partly done:** files identified, structure audited (`src/audit_raw_data.py`, data dictionary), city file added. Pending: confirm units |
-| 2 | Merge max and min observations by location and date | Pending |
-| 3 | Validate missing values, duplicates, temperature ranges, spatial coverage | Pending (audit already shows one missing location-date; see data dictionary) |
+| 2 | Merge max and min observations by location and date | Implemented and executed; human review pending |
+| 3 | Validate missing values, duplicates, temperature ranges, spatial coverage | Structural validation implemented and executed; physical bounds/units and human review pending |
 | 4 | Define extreme daytime and nighttime thresholds | Pending (team decision) |
-| 5 | Generate the cleaned reproducible dataset (must run with no manual steps) | Pending |
+| 5 | Generate the cleaned reproducible dataset (must run with no manual steps) | Preliminary daily temperature panel implemented; heat indicators await #4 |
 | 6 | Exploratory visualizations and summary statistics | Pending |
 | 7 | Finalize documentation and verify reproducibility | Pending |
 
@@ -110,18 +117,18 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 | Step | Status |
 |------|--------|
 | Document data source and download process | Done (`data/README.md`) |
-| Obtain raw data from IMDWeb into `data/raw/` | Done for the team: files are committed. For the submission repo, whether raw data may be included and how to meet "no manual steps" is an **open question** |
+| Obtain raw data from IMDWeb into `data/raw/` | Done; project sharing arrangements confirmed resolved by the technical lead. Final package assembly/reproduction pending |
 | Raw-file audit script | Done (`src/audit_raw_data.py`) |
-| Pin exact dependency versions | **Pending** (minimum versions only) |
-| Processing scripts for merge, validation, thresholds, cleaned dataset | **Pending** |
-| One command to regenerate the cleaned dataset | **Pending** |
-| End-to-end check from a clean checkout | **Pending** |
+| Pin exact dependency versions | Done for the preliminary pipeline (Python 3.12.10 tested) |
+| Processing scripts for merge, validation, thresholds, cleaned dataset | Merge, validation and temperature panel implemented; thresholds pending |
+| One command to regenerate the cleaned dataset | `python src/prepare_data.py` (raw files already local) |
+| End-to-end reproduction | Automated tests and repeated-output comparison; teammate verification pending; see [verification log](docs/verification-log.md) |
 
 ## Next steps
 
-1. Settle with the instructor/TF whether the IMDWeb data counts as open-access and whether raw files may go in the submission (see [`docs/assignment-checklist.md`](docs/assignment-checklist.md)).
+1. Follow the remaining phases in [the project roadmap](docs/project-roadmap.md); topic registration and the data-sharing issue are resolved.
 2. Confirm temperature units and observation windows from IMD documentation.
-3. Work through Issues #2–#7.
+3. Review the preliminary pipeline for Issues #2/#3 and the preliminary portion of #5; then agree on extreme-heat definitions (#4), build descriptive outputs (#6) and finish documentation (#7).
 4. The raw CSVs are in this public repo by team decision. If that changes, remove them and confirm IMD's redistribution terms.
 5. Write the candidate research questions and the environmental economics relevance note ([`docs/research-questions.md`](docs/research-questions.md)), then build the separate submission repository.
 

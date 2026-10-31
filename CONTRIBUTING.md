@@ -6,7 +6,7 @@ This is a small university research group project. The workflow below keeps `mai
 
 ## Ground rules
 
-1. **Do not push directly to `main`.** All changes go through a pull request (PR) reviewed by at least one teammate. A repository rule enforces the PR requirement.
+1. **Do not push directly to `main`.** All changes go through a pull request (PR). Teammate contributions are reviewed by the technical lead (`Akshats-S`); the lead's own work does not require separate teammate approval (clarified on 2026-10-31). A repository rule enforces the PR requirement.
 2. **Work from an Issue.** Each task is tracked as a GitHub Issue. Comment on the Issue (or ask to be assigned) before starting so work is not duplicated.
 3. **Do not modify or overwrite the raw IMD CSVs** in `data/raw/` (see `data/README.md`); put derived data in `data/processed/`. Also never commit credentials, tokens or personal files.
 4. **AI tools are allowed.** The course instructor has confirmed full freedom to use AI/LLM tools. You remain responsible for everything you commit: read and verify AI-generated code and text, and never commit fabricated data or results.
@@ -37,9 +37,9 @@ This is a small university research group project. The workflow below keeps `mai
 
 1. Push your branch and open a PR into `main` (a PR template with a checklist will appear).
 2. In the description, state what changed, link the Issue (`Closes #N` when the PR fully completes it), and note how a reviewer can check it.
-3. Request a review from at least one teammate. Address comments with follow-up commits.
+3. Teammate contributors request review from the technical lead. The lead's own work may proceed after relevant checks without a separate teammate reviewer. Address any comments with follow-up commits.
 4. Confirm before requesting review: no data files or secrets are included, scripts run from a clean checkout as far as implemented, and documentation reflects what is actually done (mark unfinished items as pending).
-5. Merge once approved. Delete the branch after merging.
+5. Merge once the applicable checks and review requirements above are satisfied. Keep verification records honest; an automated check does not constitute human sign-off. Delete the branch after merging when it is no longer needed.
 
 ## Code and documentation conventions (proposed)
 

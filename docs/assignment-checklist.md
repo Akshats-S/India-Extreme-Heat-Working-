@@ -12,21 +12,22 @@ Source: course handout *Empirical Project: Preparing a Dataset & Replication Pac
 
 | Requirement from handout | Status |
 |---|---|
-| Register topic (names, dataset, source link, question title) on the shared topic-registration sheet **before** cleaning data; avoid duplicating another group | **To confirm:** the team must check this is done |
-| Dataset is open-access / publicly available | **OPEN:** access terms of the IMDWeb download are not confirmed. Ask the instructor/TF |
+| Register topic (names, dataset, source link, question title) on the shared topic-registration sheet **before** cleaning data; avoid duplicating another group | **Done:** technical lead confirms topic registered and finalized, 2026-10-31 |
+| Dataset is open-access / publicly available; permitted project data sharing | **Project access/sharing issue resolved:** technical lead confirmation, 2026-10-31. This records the project's resolution, not a new general license grant |
 | Source website/web link cited | Done in README (IMDWeb). Full citation pending |
 | README: dataset source, coverage, relevance to environmental economics | Source and coverage done. **Relevance to environmental economics: pending** (team to write) |
-| README: every cleaning/preparation step, in order | **Pending** (code not written yet) |
-| Code: scripts that take raw data and produce the cleaned dataset, matching the README | **Pending** (Issues #2-#5). Only the raw-file audit script exists |
-| Reproducible with **no manual steps** | **Pending / OPEN:** downloading from IMDWeb is currently manual. See below |
+| README: every cleaning/preparation step, in order | Preliminary steps documented in README and `docs/preparation.md`; final heat definitions pending |
+| Code: scripts that take raw data and produce the cleaned dataset, matching the README | Preliminary audit/merge/validation/panel implemented and executed (#2/#3, preliminary #5); heat indicators and human review pending |
+| Reproducible with **no manual steps** | One preparation command works with raw files already local; automated fresh-copy reproduction passed. Final package assembly and reproduction remain pending. Sharing arrangements resolved by lead |
 | 2-3 candidate research questions, each with policy relevance and a course technique (valuation, instrument comparison, CBA/discounting, treatment-effect reasoning) | **Pending** (see `docs/research-questions.md`) |
 | Self-contained folder submitted | **Planned:** a separate submission repository (see below) |
 
-## Open questions to settle with the instructor/TF
+## Data-sharing status
 
-1. Does the IMDWeb download count as open-access / publicly available? IMD's data-supply procedure (separate from IMDWeb) says supplied data must not be shared with third parties.
-2. May the raw CSVs be included in the submitted folder? Team decision for the working repo: the raw CSVs are committed in `data/raw/` for internal use (the repo is public, so they are downloadable). For the submission repo this is still to confirm. IMD's data-supply procedure says supplied data must not be shared with third parties.
-3. If raw files cannot be included, is a download script or a documented download step acceptable? (An open Python package, `imdlib`, downloads IMD gridded data by script; whether it covers the needed variables has not been checked.)
+The technical lead confirmed on 2026-10-31 that the data-sharing issue has been
+resolved. Do not keep this as an unresolved project blocker or repeatedly ask
+for the same confirmation. Cite IMD and document the actual source/access
+details in the final package; no broader redistribution license is inferred.
 
 ## Repository plan
 
@@ -35,4 +36,7 @@ Source: course handout *Empirical Project: Preparing a Dataset & Replication Pac
 
 ## Verification
 
-Every group member should verify each step of the code (see `docs/verification-log.md`). AI-written code must be read and checked by a person before it is relied on.
+The course's human responsibility requirement still applies. The lead clarified
+that separate teammate review is for teammate contributions, not a gate on the
+lead's own work. Record actual automated and human checks distinctly in
+`docs/verification-log.md`; do not fabricate human verification.
