@@ -47,7 +47,7 @@ The [preliminary assessment note](docs/preliminary-assessment.md) contains the b
 | Min-temperature file | The CSV with a `tmin` column (identified from its header) |
 | City coordinates | [`config/cities.geojson`](config/cities.geojson) (16 city points; matches the point coordinates in both CSVs) |
 
-Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). The raw files are committed in `data/raw/`. Whether the IMDWeb download counts as open-access (the handout requires open-access data) is **open**; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md).
+Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). The raw files are committed in `data/raw/`. The technical lead confirmed topic registration/finalization and resolution of the project's data-sharing issue on 2026-10-31; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md). Separate teammate approval is not required for the lead's own work.
 
 ## Daily maximum vs. minimum temperature
 
@@ -117,7 +117,7 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 | Step | Status |
 |------|--------|
 | Document data source and download process | Done (`data/README.md`) |
-| Obtain raw data from IMDWeb into `data/raw/` | Done for the team: files are committed. For the submission repo, whether raw data may be included and how to meet "no manual steps" is an **open question** |
+| Obtain raw data from IMDWeb into `data/raw/` | Done; project sharing arrangements confirmed resolved by the technical lead. Final package assembly/reproduction pending |
 | Raw-file audit script | Done (`src/audit_raw_data.py`) |
 | Pin exact dependency versions | Done for the preliminary pipeline (Python 3.12.10 tested) |
 | Processing scripts for merge, validation, thresholds, cleaned dataset | Merge, validation and temperature panel implemented; thresholds pending |
@@ -126,7 +126,7 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 
 ## Next steps
 
-1. Settle with the instructor/TF whether the IMDWeb data counts as open-access and whether raw files may go in the submission (see [`docs/assignment-checklist.md`](docs/assignment-checklist.md)).
+1. Follow the remaining phases in [the project roadmap](docs/project-roadmap.md); topic registration and the data-sharing issue are resolved.
 2. Confirm temperature units and observation windows from IMD documentation.
 3. Review the preliminary pipeline for Issues #2/#3 and the preliminary portion of #5; then agree on extreme-heat definitions (#4), build descriptive outputs (#6) and finish documentation (#7).
 4. The raw CSVs are in this public repo by team decision. If that changes, remove them and confirm IMD's redistribution terms.

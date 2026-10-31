@@ -14,8 +14,9 @@ python src/prepare_data.py
 
 This single preparation command audits both raw files, constructs and validates
 the merged panel, and writes the outputs. No spreadsheet editing is needed.
-The two CSVs must already be available locally. Their permitted redistribution
-and the final submission's data-access workflow remain unresolved.
+The two CSVs must already be available locally. The technical lead confirmed the
+project's data-sharing arrangements are resolved on 2026-10-31. Final package
+assembly and reproduction must still be completed and documented.
 
 Defaults are relative to the script's repository, so the command also works
 when invoked by absolute path from another working directory. Custom paths:

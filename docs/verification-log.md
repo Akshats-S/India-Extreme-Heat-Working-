@@ -10,6 +10,12 @@ The handout asks every group member to verify each step of the code, because AI 
 
 ## Automated checks executed on 2026-10-31
 
+Workflow clarification received later on 2026-10-31: the technical lead confirms
+there is no separate teammate approval requirement for the lead's own work.
+Earlier human-verification-pending labels record the absence of a human check;
+they do not impose an external-review gate. Topic registration/finalization and
+the project's data-sharing issue are confirmed resolved by the lead.
+
 These are execution records, not human sign-off. A teammate must still read the
 code and verify the outputs before submission.
 

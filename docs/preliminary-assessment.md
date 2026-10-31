@@ -1,7 +1,10 @@
 # Preliminary assessment: topic outline and deliverables
 
-Team-provided preliminary deadline: 6 November 2026. This is a draft for team
-review; the assessment has not been submitted.
+Team-provided preliminary deadline: 6 November 2026. The preliminary dataset,
+code and topic outline are prepared; the assessment has not been submitted.
+The technical lead confirmed topic registration/finalization and resolution of
+data sharing on 2026-10-31. Separate teammate review is not a gate on the lead's
+own work.
 
 ## Topic outline
 
@@ -58,7 +61,7 @@ After running `python src/prepare_data.py` from the repository root:
 
 Generated datasets/reports are intentionally git-ignored and must be regenerated
 locally. Their exclusion from Git is not an omission from the local deliverables.
-Data-sharing permission must be settled before distributing a submission copy.
+The technical lead has confirmed the project's data-sharing arrangements are resolved.
 
 ## Readiness checklist
 
@@ -68,9 +71,9 @@ Data-sharing permission must be settled before distributing a submission copy.
 - [x] Repeated preparation in a fresh repository copy produced identical files.
 - [x] Original raw files and exact temperature values preserved.
 - [x] Brief research-topic outline drafted above.
-- [ ] Team members read the code, inspect outputs and record human verification.
-- [ ] Team confirms topic registration and avoids duplicating another group.
-- [ ] Confirm source eligibility and permitted data sharing with the instructor/TF.
+- [x] Review workflow clarified: no separate teammate approval for the lead's own work; automated evidence recorded without claiming human sign-off.
+- [x] Topic registration and finalization confirmed by the technical lead, 2026-10-31.
+- [x] Project data-sharing issue confirmed resolved by the technical lead, 2026-10-31.
 - [ ] Confirm any additional preliminary-submission instructions and team details.
 - [ ] Assemble and submit the dataset, code and topic outline as instructed.
 

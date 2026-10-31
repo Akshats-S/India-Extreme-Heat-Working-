@@ -32,4 +32,4 @@ India Meteorological Department (IMD) daily gridded temperature, 1 degree, downl
 
 The team decided to keep the raw CSVs in this repository for internal use. Be aware that this repository is public, so the files are downloadable by anyone, and IMD's data-supply procedure says supplied data must not be shared with third parties.
 
-Still open for the submission repo: the course handout requires open-access data and a self-contained folder with no manual steps. Whether IMDWeb data counts as open-access, and whether the raw files may go in the submission, is not confirmed with the instructor/TF. See [`docs/assignment-checklist.md`](../docs/assignment-checklist.md).
+Update, 2026-10-31: the technical lead confirms that the project's data-sharing issue is resolved. Final packaging must follow those arrangements and include source attribution. This records the project-specific resolution; it does not assert a new general redistribution license. See [`docs/assignment-checklist.md`](../docs/assignment-checklist.md).
