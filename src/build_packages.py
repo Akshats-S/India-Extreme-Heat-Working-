@@ -91,10 +91,14 @@ def run(python, directory, arguments):
 
 
 def copy_sources(staging, mode):
-    selected = [ROOT / "requirements.txt", ROOT / "data/README.md"]
-    for pattern in ("src/*.py", "tests/test_*.py", "config/*.json", "config/*.geojson", "docs/package-templates/*.txt"):
-        selected.extend(ROOT.glob(pattern))
-    selected.extend(ROOT / "docs" / name for name in CORE_DOCS)
+    if mode == "preliminary":
+        selected = [ROOT / name for name in
+                    ("src/prepare_data.py", "config/cities.geojson", "config/preparation.json")]
+    else:
+        selected = [ROOT / "requirements.txt", ROOT / "requirements-preliminary.txt", ROOT / "data/README.md"]
+        for pattern in ("src/*.py", "tests/test_*.py", "config/*.json", "config/*.geojson", "docs/package-templates/*.txt"):
+            selected.extend(ROOT.glob(pattern))
+        selected.extend(ROOT / "docs" / name for name in CORE_DOCS)
     selected.extend((ROOT / "data/raw").glob("*.csv"))
     for source in selected:
         if not source.resolve().is_relative_to(ROOT.resolve()):
@@ -102,6 +106,8 @@ def copy_sources(staging, mode):
         destination = staging / source.relative_to(ROOT)
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, destination)
+    if mode == "preliminary":
+        shutil.copy2(ROOT / "requirements-preliminary.txt", staging / "requirements.txt")
     metadata = json.loads((ROOT / "config/submission.json").read_text())
     members = metadata["team_members"]
     if not isinstance(members, list) or any(not isinstance(name, str) or not name.strip() for name in members):
@@ -114,12 +120,13 @@ def copy_sources(staging, mode):
     for field, value in (("COURSE", metadata["course"]), ("YEAR", metadata["academic_year"]), ("TEAM", names), ("SECTION", section)):
         template = template.replace("{{" + field + "}}", value)
     (staging / "README.md").write_text(template, encoding="utf-8")
-    (staging / "COVER.md").write_text(
-        f"# India extreme heat - {mode} assessment\n\nCourse: {metadata['course']} ({metadata['academic_year']})\n\n"
-        f"Team: {names}\n\n"
-        + (f"Section: {section}\n\n" if section else "")
-        + f"Deadline: {metadata[mode + '_deadline']}\n",
-        encoding="utf-8")
+    if mode == "final":
+        (staging / "COVER.md").write_text(
+            f"# India extreme heat - {mode} assessment\n\nCourse: {metadata['course']} ({metadata['academic_year']})\n\n"
+            f"Team: {names}\n\n"
+            + (f"Section: {section}\n\n" if section else "")
+            + f"Deadline: {metadata[mode + '_deadline']}\n",
+            encoding="utf-8")
     shutil.copy2(ROOT / "docs/topic-outline.md", staging / "TOPIC_OUTLINE.md")
     if mode == "final":
         shutil.copy2(ROOT / "docs/research-questions.md", staging / "RESEARCH_QUESTIONS.md")
@@ -136,7 +143,7 @@ def build_package(mode, output_dir, python):
         staging.mkdir()
         names_complete = copy_sources(staging, mode)
         raw_before = {p.name: digest(p) for p in (staging / "data/raw").glob("*.csv")}
-        command = ["src/run_project.py"] + (["--preliminary"] if mode == "preliminary" else [])
+        command = ["src/prepare_data.py", "--skip-heat"] if mode == "preliminary" else ["src/run_project.py"]
         print(f"{mode}: generating a fresh package...", flush=True)
         run(python, staging, command)
         first = generated_hashes(staging)
@@ -144,7 +151,9 @@ def build_package(mode, output_dir, python):
         if first != generated_hashes(staging):
             raise ValueError(mode + ": repeated regeneration changed output bytes.")
         print(f"{mode}: repeated outputs match; running all tests...", flush=True)
-        tests = run(python, staging, ["-m", "unittest", "discover", "-s", "tests", "-v"])
+        # Development tests stay outside the deliberately minimal preliminary hand-in.
+        test_directory = ROOT if mode == "preliminary" else staging
+        tests = run(python, test_directory, ["-m", "unittest", "discover", "-s", "tests", "-v"])
         match = re.search(r"Ran (\d+) tests?", tests.stderr)
         if not match:
             raise ValueError("Unable to establish the executed test count.")
@@ -155,27 +164,48 @@ def build_package(mode, output_dir, python):
                   "raw_inputs_unchanged": True, "team_names_present": names_complete,
                   "source_file_fingerprints": "MANIFEST.json", "regeneration_command": "python " + " ".join(command),
                   "generated_files_sha256": first}
-        check_path = staging / "PACKAGE_CHECKS.json"
-        check_path.write_text(json.dumps(checks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        write_manifest(staging)
         archive_path = base / (name + ".zip")
-        write_archive(staging, archive_path)
-        extracted = extract_checked(archive_path, base / "extracted")
-        verify_manifest(extracted)
-        print(f"{mode}: regenerating from the extracted ZIP...", flush=True)
-        run(python, extracted, command)
-        if first != generated_hashes(extracted):
-            raise ValueError("Extracted ZIP did not reproduce its included outputs.")
-        verify_manifest(extracted)
-        checks["zip_extraction_reproduction_passed"] = True
-        check_path.write_text(json.dumps(checks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        write_manifest(staging)
-        write_archive(staging, archive_path)
-        # Only the check record/manifest changed after the proven ZIP run.
-        final_extract = extract_checked(archive_path, base / "final-extracted")
-        included = verify_manifest(final_extract)
-        if first != generated_hashes(final_extract):
-            raise ValueError("Final archive's verified data payload changed.")
+        if mode == "preliminary":
+            # Ship the requested dataset, code and outline plus runtime inputs only.
+            for file in (staging / "data/processed").iterdir():
+                if file.name != "daily_temperatures.csv":
+                    file.unlink()
+            approved = {p.relative_to(staging).as_posix(): digest(p) for p in payload_files(staging)}
+            checks["package_files_sha256"] = approved
+            checks["source_file_fingerprints"] = "package_build_report.json (outside the hand-in)"
+            write_archive(staging, archive_path)
+            extracted = extract_checked(archive_path, base / "extracted")
+            actual = {p.relative_to(extracted).as_posix(): digest(p) for p in payload_files(extracted)}
+            if actual != approved:
+                raise ValueError("Preliminary ZIP does not match its approved file list.")
+            print(f"{mode}: regenerating from the extracted ZIP...", flush=True)
+            run(python, extracted, command)
+            if first != generated_hashes(extracted):
+                raise ValueError("Extracted preliminary ZIP did not regenerate the verified outputs.")
+            if any(digest(extracted / relative) != expected for relative, expected in approved.items()):
+                raise ValueError("Preliminary reproduction changed a bundled input or dataset.")
+            checks["zip_extraction_reproduction_passed"] = True
+            included = len(approved)
+        else:
+            check_path = staging / "PACKAGE_CHECKS.json"
+            check_path.write_text(json.dumps(checks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            write_manifest(staging)
+            write_archive(staging, archive_path)
+            extracted = extract_checked(archive_path, base / "extracted")
+            verify_manifest(extracted)
+            print(f"{mode}: regenerating from the extracted ZIP...", flush=True)
+            run(python, extracted, command)
+            if first != generated_hashes(extracted):
+                raise ValueError("Extracted ZIP did not reproduce its included outputs.")
+            verify_manifest(extracted)
+            checks["zip_extraction_reproduction_passed"] = True
+            check_path.write_text(json.dumps(checks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            write_manifest(staging)
+            write_archive(staging, archive_path)
+            final_extract = extract_checked(archive_path, base / "final-extracted")
+            included = verify_manifest(final_extract) + 1
+            if first != generated_hashes(final_extract):
+                raise ValueError("Final archive's verified data payload changed.")
         destination = output_dir / (name + ".zip")
         handle, temporary_zip = tempfile.mkstemp(dir=output_dir, suffix=".zip.tmp")
         os.close(handle)
@@ -186,7 +216,7 @@ def build_package(mode, output_dir, python):
             if os.path.exists(temporary_zip):
                 os.unlink(temporary_zip)
         return {"archive": destination.name, "sha256": digest(destination), "bytes": destination.stat().st_size,
-                "included_files": included + 1, **checks}
+                "included_files": included, **checks}
 
 
 def main(argv=None):

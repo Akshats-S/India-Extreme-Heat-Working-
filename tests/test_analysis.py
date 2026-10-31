@@ -3,6 +3,7 @@
 import contextlib
 import io
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -108,6 +109,22 @@ class AnalysisTests(unittest.TestCase):
 
 
 class PackageIntegrityTests(unittest.TestCase):
+    @unittest.skipUnless(all((ROOT / "data/raw" / name).exists() for name in
+                             ("imdweb_B3KKauQB.csv", "imdweb_5PfvCU0D.csv")), "Original inputs are unavailable.")
+    def test_preliminary_runs_without_final_modules_or_development_files(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            copy_sources(root, "preliminary")
+            self.assertEqual([p.name for p in (root / "src").iterdir()], ["prepare_data.py"])
+            for excluded in ("docs", "tests", "outputs", "COVER.md", "MANIFEST.json", "PACKAGE_CHECKS.json"):
+                self.assertFalse((root / excluded).exists(), excluded)
+            result = subprocess.run([sys.executable, "-W", "error", "src/prepare_data.py", "--skip-heat"],
+                                    cwd=root, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            daily = pd.read_csv(root / "data/processed/daily_temperatures.csv", float_precision="round_trip")
+            self.assertEqual(daily.shape, (140256, 16))
+            self.assertEqual(int(daily.temperature_pair_complete.sum()), 140255)
+
     def test_package_includes_city_mapping_and_sources_needed_to_rebuild(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

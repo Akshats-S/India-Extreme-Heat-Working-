@@ -1,71 +1,40 @@
-# India extreme heat: preliminary assessment
+# Preliminary assessment: India extreme heat
 
-Course: {{COURSE}} | Academic year: {{YEAR}}
+{{COURSE}}, {{YEAR}}
 Team: {{TEAM}}
 Section: {{SECTION}}
-Preliminary deadline: November 6, 2026 (team-provided handoff).
+6 November 2026
 
-## What to submit
+This folder contains the preliminary dataset, the code used to prepare it,
+and the brief research-topic outline in TOPIC_OUTLINE.md.
 
-This self-contained folder contains the preliminary dataset, its preparation
-code and a brief research-topic outline. TOPIC_OUTLINE.md is the outline.
-data/processed/daily_temperatures.csv is the preliminary cleaned dataset.
-The two original source CSVs are included in data/raw/ under the project's
-confirmed sharing arrangements. Validation/coverage reports and tests are
-supporting material.
+## Dataset
 
-## Reproduce
+`data/processed/daily_temperatures.csv` contains 140,256 city-day rows and
+16 columns for 16 locations, 1 January 2001 to 31 December 2024. It includes
+city, date, Tmax/Tmin, city/grid coordinates and missing-data flags. Both
+original files omit Guwahati, 26 June 2005; that row remains blank and flagged.
+No temperature is filled, rounded, clipped, deleted or converted.
 
-Use Python 3.11+ (tested with Python 3.12.10). Extract the ZIP first and open a
-terminal in this folder. Install the pinned dependencies once:
+Source: India Meteorological Department (IMD), via https://imdweb.lwcc.in/ .
+Original inputs are included in data/raw/. Celsius and one-degree product
+details: https://www.imdpune.gov.in/cmpg/Griddata/Max_1_Bin.html and
+https://www.imdpune.gov.in/cmpg/Griddata/Min_1_Bin.html . Grid estimates are
+not city weather-station measurements; Tmin is a nighttime proxy, with the
+export's exact clock-time convention unverified.
+
+## Run the preparation code
+
+Use Python 3.11+ (tested with 3.12.10), open a terminal in this folder and run:
 
     python -m pip install -r requirements.txt
+    python src/prepare_data.py --skip-heat
 
-Then regenerate the preliminary dataset without manual data-editing steps:
+The code validates schemas, dates, unique point/date keys, coordinates,
+numeric values and Tmin <= Tmax; constructs the full city-date calendar;
+joins Tmax/Tmin; attaches city names; preserves missing observations; and
+writes the sorted dataset. It also generates coverage and validation reports
+as execution diagnostics. Those reports are not separate submission items.
 
-    python src/run_project.py --preliminary
-
-Run the automated checks:
-
-    python -W error -m unittest discover -s tests -v
-
-The same code supports the final workflow, but --preliminary deliberately
-produces the temperature-only daily table and the three supporting reports.
-Tests use synthetic examples and actual raw-data acceptance checks.
-
-## Dataset and preparation
-
-Source: India Meteorological Department, accessed via https://imdweb.lwcc.in/ .
-Coverage: 16 selected Indian city points, January 1, 2001 through December 31,
-2024; daily maximum/minimum gridded temperatures, one-degree resolution.
-The full panel has 140,256 rows and 140,255 complete temperature pairs.
-Guwahati, June 26, 2005 remains blank and explicitly flagged in both variables.
-
-Preparation, in order: validate schemas and CSV records; parse exact calendar
-dates and numeric values; check IDs, unique point/date keys, city coordinates,
-grid consistency, broad Celsius QC bounds and Tmin <= Tmax; construct every
-expected city-day; attach city names; join Tmax/Tmin one-to-one; preserve and
-flag the known gap; calculate coverage; sort and write deterministic outputs.
-Raw values are not imputed, rounded, clipped or converted. Full schemas and
-steps are in docs/preparation.md and docs/data-dictionary.md.
-
-## Environmental economics relevance
-
-Daytime/nighttime exposure patterns motivate questions about the timing and
-allocation of adaptation services, cooling access and energy-efficient
-protection. The topic outline distinguishes exposure evidence from policy
-costs, health outcomes or causal effects that require additional data.
-
-## Important limits and review
-
-Values are interpolated grid estimates, not urban station measurements.
-Celsius is established from product provenance; exact export clock-time
-alignment is unverified, so source dates are retained and Tmin is a nighttime
-proxy. See docs/source-metadata.md and docs/review-guide.md. The verification
-record and PACKAGE_CHECKS.json describe actual automated checks; they do not
-claim human sign-off. MANIFEST.json fingerprints the included files.
-
-Full IMD citation: Srivastava, A. K., Rajeevan, M., and Kshirsagar, S. R. (2009),
-Development of a high resolution daily gridded temperature data set (1969-2005)
-for the Indian region, Atmospheric Science Letters, doi:10.1002/asl.232.
-Product evidence and documentation access date are in config/source_metadata.json.
+The config files supply the city mapping and preparation settings. The brief
+research topic, economics motivation and coverage are in TOPIC_OUTLINE.md.

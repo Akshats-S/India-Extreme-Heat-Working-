@@ -61,9 +61,13 @@ limitations. No causal policy, mortality, demand or welfare effect is estimated.
 `Submissions` directory. It copies an explicit source/documentation whitelist,
 regenerates outputs twice in a fresh staging folder, runs the complete tests,
 checks raw-file preservation, builds and extracts each ZIP, and verifies exact
-regeneration from the extracted copy. Manifests verify every included file.
+regeneration from the extracted copy. The preliminary hand-in contains nine
+essential files; its tests and file fingerprints remain outside the hand-in
+in the working project's build report. The final package includes its tests,
+manifest and verification records. Preliminary tests run from the working
+source, including an actual standalone run without final-analysis modules.
 Compiled caches, Git history, credentials and assistant instruction files are
-excluded. Existing source files and the older preliminary ZIP are preserved.
+excluded. Original source data remain unchanged.
 
 Use `--verify-python PATH` to verify with another Python environment that has
 the pinned requirements installed. A fresh isolated environment was used for

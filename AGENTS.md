@@ -49,4 +49,6 @@ inputs, deliberately faulty examples, known-answer calculations and packaging.
 
 In the working repository, generated data/figures are git-ignored. In the
 submission repository they are committed, and Git must preserve their packaged
-bytes so `MANIFEST.json` and validation fingerprints remain valid.
+bytes so final manifests and recorded validation fingerprints remain valid.
+The preliminary hand-in contains only the requested dataset, preparation code,
+brief outline and essential runtime files; tests/build records remain outside it.
