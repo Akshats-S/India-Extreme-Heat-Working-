@@ -225,6 +225,11 @@ __marimo__/
 # Processed data: regenerate from raw data
 data/processed/*
 !data/processed/.gitkeep
+# Reproducible analysis and figure artifacts
+outputs/analysis/*
+!outputs/analysis/.gitkeep
+outputs/figures/*
+!outputs/figures/.gitkeep
 # Common data/gridded formats that should not be committed by accident
 *.nc
 *.grd

@@ -42,8 +42,9 @@ of which 140,255 contain both temperatures.
 The data represent 1-degree grid cells associated with city points, rather
 than city weather stations or direct measurements of urban heat islands.
 The current repository also implements the phase 1/2 threshold and frequency
-method in `docs/methodology.md`. The earlier preliminary ZIP is a preserved
-temperature-only snapshot. No trend or causal findings are claimed in this
+method in `docs/methodology.md`. The refreshed preliminary ZIP in `Submissions`
+contains the temperature-only workflow; use it instead of the older parent-folder
+ZIP. No trend or causal findings are claimed in this
 topic outline.
 
 ## Deliverables available locally
@@ -70,18 +71,20 @@ The technical lead has confirmed the project's data-sharing arrangements are res
 
 - [x] Preliminary daily dataset generated from the actual source files.
 - [x] Preparation code, configuration, schema and instructions available.
-- [x] Twenty automated tests passed, including real-data acceptance checks.
+- [x] Refreshed package passed 42 automated tests in a fresh isolated environment, including real-data acceptance checks.
 - [x] Repeated preparation in a fresh repository copy produced identical files.
 - [x] Original raw files and exact temperature values preserved.
 - [x] Brief research-topic outline drafted above.
 - [x] Review workflow clarified: no separate teammate approval for the lead's own work; automated evidence recorded without claiming human sign-off.
 - [x] Topic registration and finalization confirmed by the technical lead, 2026-10-31.
 - [x] Project data-sharing issue confirmed resolved by the technical lead, 2026-10-31.
-- [ ] Confirm any additional preliminary-submission instructions and team details.
-- [ ] Assemble and submit the dataset, code and topic outline as instructed.
+- [x] Team names supplied: Akshat Srivastava, Krishna Reddy and Jatin Shetty.
+- [ ] Check any additional portal-specific instructions/fields.
+- [x] Refreshed preliminary ZIP assembled and verified, including extraction/reproduction.
+- [ ] Complete your review and any portal-specific details, then submit as instructed.
 
 Source documentation and nearest-grid consistency checks now establish the
 phase 1 measurement contract, with explicit date-alignment and spatial limits.
-Heat indicators are implemented; the 2-3 final candidate research questions
-remain phase 4 work and are outside the preliminary scope in the team handoff.
+Heat indicators and three final candidate research questions are completed;
+they are outside the preliminary scope in the team handoff.
 The final assessment is due 30 November 2026.

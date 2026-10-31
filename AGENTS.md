@@ -39,11 +39,11 @@ This file is for any AI assistant or chatbot a teammate uses on this repository 
 | `docs/data-dictionary.md` | Column definitions and observed structural facts about the raw files |
 | `docs/methodology.md` | Technical outline and open decisions, decision log |
 | `docs/assignment-checklist.md` | Course handout requirements vs. status, open questions for the instructor |
-| `docs/research-questions.md` | Template for the 2-3 candidate research questions the handout requires |
+| `docs/research-questions.md` | Three completed candidate economics applications; extra data/identification requirements explicit |
 | `docs/verification-log.md` | Record of human verification of each step |
-| `src/` | Preparation: `prepare_data.py`; heat methods: `heat_metrics.py`; read-only audit: `audit_raw_data.py`. Config: preparation/heat_metrics/source_metadata JSON. Guides: preparation, methodology, source-metadata and heat-output-schema under docs/; tests under tests/ |
-| `notebooks/` | Exploration notebooks (none yet) |
-| `outputs/figures/` | Generated figures (none yet) |
+| `src/` | Preparation: `prepare_data.py`; heat methods: `heat_metrics.py`; audit: `audit_raw_data.py`; analysis: `analyze_data.py`; full workflow: `run_project.py`; packages: `build_packages.py`. Config includes preparation/heat_metrics/source_metadata/submission JSON. Guides and schemas under docs/; tests under tests/ |
+| `notebooks/` | Not required; all reproduction runs through source scripts |
+| `outputs/figures/` | Five generated, git-ignored PNG figures; `outputs/analysis/` holds tables/results/report |
 
 ## Raw data schema (details in docs/data-dictionary.md)
 
@@ -62,6 +62,8 @@ python -m pip install -r requirements.txt
 # the two raw CSVs are already in data/raw/ after cloning, then:
 python src/audit_raw_data.py
 python src/prepare_data.py
+python src/run_project.py
+python src/build_packages.py
 python -W error -m unittest discover -s tests -v
 ```
 

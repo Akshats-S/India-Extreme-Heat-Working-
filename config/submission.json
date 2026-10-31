@@ -1,0 +1,14 @@
+{
+  "course": "Introduction to Environmental Economics",
+  "academic_year": "2026-27",
+  "course_section": "",
+  "team_members": [
+    "Akshat Srivastava",
+    "Krishna Reddy",
+    "Jatin Shetty"
+  ],
+  "preliminary_deadline": "2026-11-06",
+  "final_deadline": "2026-11-30",
+  "preliminary_requirements_source": "Team-provided ChatGPT handoff; preliminary dataset, preparation code and brief topic outline",
+  "final_requirements_source": "Course handout: docs/handout/Instructions.pdf"
+}

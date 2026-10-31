@@ -81,10 +81,10 @@ whole-sample event totals as independent evidence of greater heat severity.
 
 ## 5. Other open questions
 
-- Phase 3: descriptive figures and sensitivity to alternative percentiles/reference choices.
+- Phase 3 figures and four-specification sensitivity are implemented; see `analysis-guide.md` and the generated results note.
 - Exact export clock-time alignment remains an acknowledged evidence limitation; no date shift is inferred.
-- Dependencies are pinned; plotting may add dependencies in phase 3.
-- License and data attribution text
+- Preparation and plotting dependencies are pinned and installed successfully in a fresh isolated environment.
+- IMD attribution is complete; project data sharing is resolved. No new blanket software/data license is assigned by the replication package.
 
 ## 6. Decision log
 

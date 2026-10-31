@@ -103,3 +103,48 @@ code and verify the outputs before submission.
   regional spatial representation and the retrospective 24-year reference
   remain disclosed interpretation limitations. Figures, sensitivity analysis,
   economics questions and final packaging remain phases 3-5.
+
+## Phase 3-5 checks executed on 2026-10-31
+
+- `python src/run_project.py` completed on the real sources: the seven
+  preparation files, six analysis CSVs, computed results note, analysis report
+  and five PNG figures were generated. The primary dataset and source values
+  remain unchanged from phase 2.
+- Four specifications were executed: primary P90/full reference/five-day
+  window, P95, P90 with 2001-2010 reference and P90 with a 15-day window.
+  Actual primary mean changes across the selected cities: daytime
+  0.8743792731100013 pp, nighttime 5.335022741412352 pp; night-minus-day change
+  is positive in 13 cities. Signs agree across all four variants for 15 cities;
+  Delhi changes sign in the earlier-reference diagnostic. The generated note
+  retains sampling/network/spatial/proxy limitations and no causal claim.
+- All five figures were visually inspected. A clipped common annual-panel
+  range found during QA was fixed; the range now contains every city peak.
+  A regression test protects that condition. Final figures have readable
+  labels, units, periods, legends and sources. No source observation was
+  deleted to simplify a plot.
+- Three completed economics applications and the topic outline specify policy
+  relevance, course technique and additional data/identification requirements.
+  Submission README templates list every preparation/analysis step in order.
+- A new Python 3.12.10 virtual environment was created and all pinned packages
+  installed from `requirements.txt`; `pip check` reported no broken requirements.
+- `src/build_packages.py` built both dated ZIPs using that isolated Python.
+  **42 tests passed in each package** with warnings treated as errors, including
+  real-data acceptance. The earlier workspace run had 41 tests; one additional
+  package-whitelist test was added after fresh staging caught an omitted
+  GeoJSON file. That omission was fixed before the packages were delivered.
+- Each package's outputs were regenerated twice in fresh staging and matched
+  byte-for-byte. Each ZIP was extracted and the documented command regenerated
+  the included outputs exactly. Raw-file fingerprints were unchanged. Final
+  check/manifest records were verified in the final archives; compiled caches,
+  Git history, credentials and assistant instructions are excluded.
+- The preliminary package contains 43 files and four generated temperature
+  artifacts; the final contains 60 files and 20 generated data/analysis/figure
+  artifacts. `PACKAGE_CHECKS.json` and `MANIFEST.json` provide the per-package
+  evidence; the sibling `Submissions/package_build_report.json` fingerprints
+  the ZIPs. The final named packages were rebuilt using the same isolated
+  environment and the full verification sequence.
+- The technical lead supplied the names Akshat Srivastava, Krishna Reddy
+  and Jatin Shetty. Both covers and submission metadata include those names.
+  Section/IDs were not supplied and are only needed if the portal requires
+  them. No assessment was uploaded, no private submission repository was
+  changed, and no independent human verification is claimed.
