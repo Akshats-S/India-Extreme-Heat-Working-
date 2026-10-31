@@ -68,7 +68,7 @@ excluded. Existing source files and the older preliminary ZIP are preserved.
 Use `--verify-python PATH` to verify with another Python environment that has
 the pinned requirements installed. A fresh isolated environment was used for
 the final package verification; execution evidence is in the verification log.
-Edit `config/submission.json` to add names/section and rebuild if those fields
-are not yet supplied. The private submission repository is not modified by
-this command; submission remains an action performed through the course's
-specified channel.
+Team/course metadata is stored in `config/submission.json`. After source or
+documentation corrections, rebuild the ZIPs and refresh the matching folders
+in the submission repository. The builder creates local packages; course
+submission uses the course's specified channel.

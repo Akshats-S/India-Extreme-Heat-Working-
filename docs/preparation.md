@@ -1,8 +1,7 @@
 # Data preparation and heat workflow
 
-Scope: Issues #2-#5, including the phase 1 measurement method and phase 2
-research variables. Figures, economics questions and verified submission ZIPs
-are also implemented. The numbered steps below describe shared raw preparation; heat steps
+The numbered steps below describe the shared raw preparation and validation.
+Heat measurements and research variables
 are documented in [methodology.md](methodology.md) and [heat-output-schema.md](heat-output-schema.md).
 
 ## Run
@@ -17,9 +16,8 @@ python src/prepare_data.py
 This single preparation command audits both raw files, constructs and validates
 the merged panel, fits the fixed seasonal thresholds and writes all seven
 outputs. Use `--skip-heat` for the original temperature-only workflow. No spreadsheet editing is needed.
-The two CSVs must already be available locally. The technical lead confirmed the
-project's data-sharing arrangements are resolved on 2026-10-31. Final package
-assembly and reproduction must still be completed and documented.
+The two original CSVs are included in the repository and assessment packages.
+Both packages have passed fresh-stage tests and extracted-ZIP reproduction.
 
 Defaults are relative to the script's repository, so the command also works
 when invoked by absolute path from another working directory. Custom paths:
@@ -122,7 +120,8 @@ and limitations are in [source-metadata.md](source-metadata.md).
 ## Output files and schema
 
 The four shared/preliminary files below go into `data/processed/` and are
-git-ignored. The default workflow adds the three heat tables documented in
+git-ignored in the working repository and committed in submission copies.
+The default workflow adds the three heat tables documented in
 [heat-output-schema.md](heat-output-schema.md), and appends five daily columns.
 `--skip-heat` produces only the four preliminary files.
 
@@ -170,7 +169,7 @@ there are no unmatched source records, duplicate keys, city-coordinate
 disagreements, cross-file grid disagreements or Tmin-above-Tmax observations.
 The sole absent key is Guwahati, 2005-06-26, in both files. The complete output
 retains that row with blank temperatures and cell metadata. Coverage has 384
-city-year rows. Phase 2 also produced 5,856 threshold rows, 384 annual heat rows
+city-year rows. The heat workflow also produced 5,856 threshold rows, 384 annual heat rows
 and 16 period-comparison rows. All city-years pass coverage rules. Validation
 passes with disclosed warnings for known source gaps, export date alignment,
 the project-relative reference method and the documented station-network

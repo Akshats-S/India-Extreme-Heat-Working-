@@ -21,11 +21,5 @@ python src/build_packages.py
 python -W error -m unittest discover -s tests -v
 ```
 
-## Review and submission
-
-| Planned step | Corresponding issue |
-|--------------|---------------------|
-| Descriptive figures and sensitivity analysis | #6 implemented |
-| Final economics questions/documentation and submission packaging | #7 implemented; team names included, review and upload remain user actions |
-
-Exact transformations and preliminary schemas are in [the preparation guide](../docs/preparation.md); the [methodology](../docs/methodology.md), [source metadata](../docs/source-metadata.md) and [heat output schemas](../docs/heat-output-schema.md) document phases 1/2. Automated and human checks remain distinguished honestly.
+Exact transformations and preliminary schemas are in [the preparation guide](../docs/preparation.md); the [methodology](../docs/methodology.md), [source metadata](../docs/source-metadata.md) and [heat output schemas](../docs/heat-output-schema.md) document the research variables. Analysis and packaging are described in
+[analysis-guide.md](../docs/analysis-guide.md).

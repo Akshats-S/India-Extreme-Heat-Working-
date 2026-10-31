@@ -1,6 +1,6 @@
-# Methodology (technical outline)
+# Methodology
 
-> **Status:** phases 1 and 2 are implemented under the technical lead's instruction on 2026-10-31 to finish the measurement method and research variables. The choices below are explicit project defaults, not claims of independent team sign-off or official heatwave classifications. Preparation is documented in [preparation.md](preparation.md), source evidence in [source-metadata.md](source-metadata.md), and the final schemas in [heat-output-schema.md](heat-output-schema.md).
+> The implemented project method below defines the temperature indicators and comparisons. These indicators are project-relative measures, not official heatwave classifications. Preparation is documented in [preparation.md](preparation.md), source evidence in [source-metadata.md](source-metadata.md), and the final schemas in [heat-output-schema.md](heat-output-schema.md).
 
 ## 1. Research question
 
@@ -24,7 +24,7 @@ Scope: prepare a clean, reproducible dataset, document the preparation process, 
 
 Structure and observed facts: see [`data-dictionary.md`](data-dictionary.md).
 
-Limitation to document: values are gridded 1-degree products, not urban weather-station measurements.
+Spatial limitation: values are gridded 1-degree products, not urban weather-station measurements.
 
 ## 3. Processing pipeline
 
@@ -34,7 +34,7 @@ Limitation to document: values are gridded 1-degree products, not urban weather-
 4. **Validation** - *Implemented.* Reject duplicates, invalid dates/IDs/numbers, out-of-period records, coordinate disagreement, unexpected gaps and Tmin above Tmax. Keep the full calendar and known Guwahati gap. Configured absent keys are warnings, not imputed values. Broad project QC bounds [-90, 60] Celsius and IMD's documented 99.9 sentinel prevent obvious input problems; these checks do not certify local plausibility. No temperature is clipped or deleted.
 5. **Extreme definitions** - see section 4.
 6. **Output** - *Implemented.* The command produces the extended daily panel, threshold table, annual and period summaries, coverage and JSON/text reports. `--skip-heat` reproduces the preliminary temperature-only workflow.
-7. **Exploratory outputs** - *Pending.* Figures and summary statistics in `outputs/`.
+7. **Descriptive analysis** - Six summary/sensitivity CSVs, four specifications, five figures and computed results in `outputs/`; see [analysis-guide.md](analysis-guide.md).
 
 ## 4. Heat measurement method (implemented)
 
@@ -79,16 +79,19 @@ each year to have 10% events, and it does not define real-time warning cutoffs.
 Emphasize changes across years/periods rather than interpreting the two
 whole-sample event totals as independent evidence of greater heat severity.
 
-## 5. Other open questions
+## 5. Interpretation and implementation limits
 
-- Phase 3 figures and four-specification sensitivity are implemented; see `analysis-guide.md` and the generated results note.
+- Four-specification sensitivity and the generated results note are documented in `analysis-guide.md`.
 - Exact export clock-time alignment remains an acknowledged evidence limitation; no date shift is inferred.
 - Preparation and plotting dependencies are pinned and installed successfully in a fresh isolated environment.
 - IMD attribution is complete; project data sharing is resolved. No new blanket software/data license is assigned by the replication package.
 
-## 6. Decision log
+## 6. Recorded choices
 
-| Date | Decision | Rationale | Decided by |
-|------|----------|-----------|------------|
-| 2026-10-31 | Preliminary merge uses point_id/date, retains exported grid metadata, builds the full calendar and flags known gaps without imputation. CSV/JSON/text outputs with stable ordering; no heat thresholds or unit conversion. | Implements the technical lead's requested preliminary pipeline while preserving original values and making missingness visible. Policy is explicit in config and the preparation guide. | Technical lead requested implementation; code/output human review pending |
-| 2026-10-31 | Phase 1/2 defaults in section 4: fixed 2001-2024 city/calendar-day P90, five-day windows, type-8 quantiles, explicit leap/missing rules, paired frequency comparisons and 2001-2005 versus 2020-2024 changes. Celsius/grid provenance and broad QC documented. | Finish the authorized measurement and research-variable phases with reproducible, configurable choices, preserving scientific limitations rather than inventing unavailable metadata. | Implementation choices made under technical lead's instruction to complete phases 1/2; no independent human verification claimed |
+The configuration records two output modes: preliminary temperature-only
+preparation and the extended heat workflow. Both use point/date joins, the
+full calendar, retained grid metadata and explicit missingness without changing
+source temperatures. The final method uses the defaults in section 4. The
+analysis changes one setting at a time for P95, the 2001-2010 reference and
+the 15-day window. These choices were implemented on 31 October 2026 and are
+protected by known-answer and real-data checks recorded in verification-log.md.

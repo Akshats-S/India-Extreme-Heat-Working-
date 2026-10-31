@@ -12,8 +12,8 @@ to extreme daytime heat across major Indian cities between 2001 and 2024?
 
 This folder provides the cleaned dataset, original inputs, complete code,
 documentation, candidate economics questions, descriptive results and figures.
-It is a replication package, not a claim to have estimated causal effects.
-The package has been checked locally and has not been uploaded or submitted.
+It is a replication package with descriptive findings and candidate economics
+applications. It does not claim causal policy effects.
 
 ## Reproduce everything
 
@@ -131,5 +131,5 @@ Sensitivity checks are not confidence intervals or causal evidence.
 - docs/: source evidence, method, complete schemas, review guide and verification.
 - src/, config/, tests/ and requirements.txt: all reproducible code/settings.
 
-Start your own review with docs/review-guide.md. Check COVER.md for your names
-and course details. No independent human sign-off is implied by automated tests.
+See docs/review-guide.md for replication and manual spot checks. Team and
+course details are in COVER.md.

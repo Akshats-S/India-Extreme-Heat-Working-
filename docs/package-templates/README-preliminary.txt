@@ -12,7 +12,7 @@ code and a brief research-topic outline. TOPIC_OUTLINE.md is the outline.
 data/processed/daily_temperatures.csv is the preliminary cleaned dataset.
 The two original source CSVs are included in data/raw/ under the project's
 confirmed sharing arrangements. Validation/coverage reports and tests are
-supporting material. This package has not been uploaded or submitted.
+supporting material.
 
 ## Reproduce
 
