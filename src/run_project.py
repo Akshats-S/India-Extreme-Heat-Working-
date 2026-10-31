@@ -1,3 +1,4 @@
+# Runs data preparation and analysis in the correct order.
 """One command to regenerate the complete replication outputs."""
 
 import argparse

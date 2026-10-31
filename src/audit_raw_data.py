@@ -1,3 +1,4 @@
+# Checks the original temperature files without changing them.
 """Read-only audit using the same checks as the preparation pipeline.
 
 Usage: python src/audit_raw_data.py [fileA.csv fileB.csv]

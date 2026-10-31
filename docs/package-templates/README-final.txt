@@ -1,3 +1,5 @@
+Data source: [India Meteorological Department, via IMDWeb](https://imdweb.lwcc.in/).
+
 # India extreme heat: final replication package
 
 Course: {{COURSE}} | Academic year: {{YEAR}}

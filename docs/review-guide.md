@@ -4,8 +4,8 @@
 
 The team handoff lists three required deliverables: a preliminary dataset,
 the software code used to prepare it, and a brief research-topic outline.
-The hand-in contains nine files: those deliverables, a short README, and only
-the original inputs, preparation settings and dependencies needed to run it.
+The hand-in contains eight files: the dataset, code and one README containing the brief outline/run instructions,
+plus the original inputs, preparation settings and dependencies needed to run it.
 Final-stage documentation, heat analysis, figures, tests and build records
 are excluded. The working repository retains development and verification material.
 
@@ -33,7 +33,7 @@ stayed unchanged. The run also creates coverage and validation diagnostics;
 these are generated during execution rather than bundled as extra hand-in items.
 Expected daily shape: 140,256 rows, 16 columns and 140,255 complete pairs.
 Guwahati, 2005-06-26 remains blank and flagged. Team names and instructions
-are in README.md; the brief topic is TOPIC_OUTLINE.md.
+and the brief topic are in README.md.
 
 The original preliminary-assessment notice has not been provided; the three-item
 list and November 6 deadline come from the team handoff. The supplied final
@@ -63,7 +63,8 @@ stay outside its minimal hand-in in the outer package_build_report.json.
 
 ## Reading and spot checks
 
-- The source and brief research question are in README.md and TOPIC_OUTLINE.md.
+- The preliminary source and brief research question are in README.md; the
+  final package also has TOPIC_OUTLINE.md.
   Check city/date rows against the original CSVs without editing originals.
 - Final docs/methodology.md defines P90, the fixed reference, seasonal windows,
   strict exceedance and paired dates. Missing heat flags are blank, not False.

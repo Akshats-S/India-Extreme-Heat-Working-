@@ -1,3 +1,4 @@
+# Tests the data preparation and validation checks.
 """Synthetic edge cases plus acceptance checks when the real sources are present."""
 
 import contextlib

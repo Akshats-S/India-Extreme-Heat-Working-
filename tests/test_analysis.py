@@ -1,3 +1,4 @@
+# Tests the analysis calculations and submission packages.
 """Known-answer descriptive aggregation, provenance and chart-range checks."""
 
 import contextlib
@@ -116,8 +117,11 @@ class PackageIntegrityTests(unittest.TestCase):
             root = Path(temporary)
             copy_sources(root, "preliminary")
             self.assertEqual([p.name for p in (root / "src").iterdir()], ["prepare_data.py"])
-            for excluded in ("docs", "tests", "outputs", "COVER.md", "MANIFEST.json", "PACKAGE_CHECKS.json"):
+            for excluded in ("docs", "tests", "outputs", "COVER.md", "TOPIC_OUTLINE.md", "MANIFEST.json", "PACKAGE_CHECKS.json"):
                 self.assertFalse((root / excluded).exists(), excluded)
+            readme = (root / "README.md").read_text(encoding="utf-8")
+            self.assertIn("Research topic", readme)
+            self.assertIn("python src/prepare_data.py --skip-heat", readme)
             result = subprocess.run([sys.executable, "-W", "error", "src/prepare_data.py", "--skip-heat"],
                                     cwd=root, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

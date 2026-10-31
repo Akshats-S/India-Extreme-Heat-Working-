@@ -1,40 +1,44 @@
-# Preliminary assessment: India extreme heat
+Data source: [India Meteorological Department, via IMDWeb](https://imdweb.lwcc.in/).
+
+# Extreme daytime and nighttime heat in Indian cities
 
 {{COURSE}}, {{YEAR}}
 Team: {{TEAM}}
 Section: {{SECTION}}
-6 November 2026
+Preliminary assessment: 6 November 2026
 
-This folder contains the preliminary dataset, the code used to prepare it,
-and the brief research-topic outline in TOPIC_OUTLINE.md.
+## Research topic
 
-## Dataset
+To what extent has the frequency of extreme nighttime heat changed relative
+to extreme daytime heat across major Indian cities between 2001 and 2024?
 
-`data/processed/daily_temperatures.csv` contains 140,256 city-day rows and
-16 columns for 16 locations, 1 January 2001 to 31 December 2024. It includes
-city, date, Tmax/Tmin, city/grid coordinates and missing-data flags. Both
-original files omit Guwahati, 26 June 2005; that row remains blank and flagged.
-No temperature is filled, rounded, clipped, deleted or converted.
+The project uses daily maximum (Tmax) and minimum (Tmin) temperatures for
+16 Indian cities to compare daytime and nighttime heat exposure. This can
+inform the timing and location of heat-protection measures, including cooling
+access and heat-response services.
 
-Source: India Meteorological Department (IMD), via https://imdweb.lwcc.in/ .
-Original inputs are included in data/raw/. Celsius and one-degree product
-details: https://www.imdpune.gov.in/cmpg/Griddata/Max_1_Bin.html and
-https://www.imdpune.gov.in/cmpg/Griddata/Min_1_Bin.html . Grid estimates are
-not city weather-station measurements; Tmin is a nighttime proxy, with the
-export's exact clock-time convention unverified.
+## Data preparation
 
-## Run the preparation code
+The source is IMD's one-degree gridded temperature data, covering 1 January
+2001 to 31 December 2024. Temperatures are in degrees Celsius. The prepared
+table has 140,256 city-day rows and
+16 columns: city/date identifiers, temperatures, coordinates and missing flags.
+Guwahati is missing one date, 26 June 2005, in both source files. That row is
+retained with blank temperatures and missing flags.
 
-Use Python 3.11+ (tested with 3.12.10), open a terminal in this folder and run:
+The script checks dates, duplicates, coordinates and temperature consistency,
+then joins Tmax and Tmin by location and date. It preserves source temperatures
+and writes the complete city-date table to data/processed/daily_temperatures.csv.
+
+## Reproduction
+
+Python 3.11+ is required; the code was tested with Python 3.12.10.
+From the assessment folder, run these commands in order:
 
     python -m pip install -r requirements.txt
     python src/prepare_data.py --skip-heat
 
-The code validates schemas, dates, unique point/date keys, coordinates,
-numeric values and Tmin <= Tmax; constructs the full city-date calendar;
-joins Tmax/Tmin; attaches city names; preserves missing observations; and
-writes the sorted dataset. It also generates coverage and validation reports
-as execution diagnostics. Those reports are not separate submission items.
-
-The config files supply the city mapping and preparation settings. The brief
-research topic, economics motivation and coverage are in TOPIC_OUTLINE.md.
+Only this preparation script is needed for the preliminary dataset.
+It also writes a city-year coverage table and validation summaries in JSON
+and TXT format. The preparation settings are in config/preparation.json;
+city names and coordinates are in config/cities.geojson.

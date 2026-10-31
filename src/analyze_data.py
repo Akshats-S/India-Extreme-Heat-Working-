@@ -1,3 +1,4 @@
+# Creates summary tables and figures from the prepared data.
 """Descriptive summaries, sensitivity checks, figures and a computed results note."""
 
 import argparse
