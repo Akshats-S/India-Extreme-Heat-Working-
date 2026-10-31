@@ -26,6 +26,7 @@ India Meteorological Department (IMD) daily gridded temperature, 1 degree, downl
 
 - Do not edit or overwrite the files in `data/raw/`. Write all derived data to `data/processed/`.
 - Run `python src/audit_raw_data.py` to re-check the raw files.
+- Run `python src/prepare_data.py` to audit, merge, validate and generate the complete city-day panel plus coverage and JSON/text validation reports in `data/processed/`. All generated files remain git-ignored. See [the preparation guide](../docs/preparation.md) for schema and configuration. No temperature values are imputed, rounded or converted.
 
 ## Sharing and open-access status
 

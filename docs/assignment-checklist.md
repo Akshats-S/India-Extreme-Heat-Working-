@@ -16,9 +16,9 @@ Source: course handout *Empirical Project: Preparing a Dataset & Replication Pac
 | Dataset is open-access / publicly available | **OPEN:** access terms of the IMDWeb download are not confirmed. Ask the instructor/TF |
 | Source website/web link cited | Done in README (IMDWeb). Full citation pending |
 | README: dataset source, coverage, relevance to environmental economics | Source and coverage done. **Relevance to environmental economics: pending** (team to write) |
-| README: every cleaning/preparation step, in order | **Pending** (code not written yet) |
-| Code: scripts that take raw data and produce the cleaned dataset, matching the README | **Pending** (Issues #2-#5). Only the raw-file audit script exists |
-| Reproducible with **no manual steps** | **Pending / OPEN:** downloading from IMDWeb is currently manual. See below |
+| README: every cleaning/preparation step, in order | Preliminary steps documented in README and `docs/preparation.md`; final heat definitions pending |
+| Code: scripts that take raw data and produce the cleaned dataset, matching the README | Preliminary audit/merge/validation/panel implemented and executed (#2/#3, preliminary #5); heat indicators and human review pending |
+| Reproducible with **no manual steps** | One preparation command works with raw files already local. Final raw-data access/sharing and teammate reproduction remain **OPEN** |
 | 2-3 candidate research questions, each with policy relevance and a course technique (valuation, instrument comparison, CBA/discounting, treatment-effect reasoning) | **Pending** (see `docs/research-questions.md`) |
 | Self-contained folder submitted | **Planned:** a separate submission repository (see below) |
 

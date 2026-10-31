@@ -1,5 +1,7 @@
-# Dependencies used by code currently in src/ (minimum versions, not yet pinned)
-pandas>=2.0
-
-# Pending: pin exact versions once the pipeline is complete (Issue #7).
-# Add other packages (e.g. geopandas, matplotlib) only when code actually uses them.
+# Tested with Python 3.12.10 (Python 3.11+ required by pandas 3).
+# pandas plus its runtime dependencies, pinned for repeatable preparation.
+pandas==3.0.5
+numpy==2.4.4
+python-dateutil==2.9.0.post0
+six==1.17.0
+tzdata==2026.3

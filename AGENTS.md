@@ -40,7 +40,7 @@ This file is for any AI assistant or chatbot a teammate uses on this repository 
 | `docs/assignment-checklist.md` | Course handout requirements vs. status, open questions for the instructor |
 | `docs/research-questions.md` | Template for the 2-3 candidate research questions the handout requires |
 | `docs/verification-log.md` | Record of human verification of each step |
-| `src/` | Pipeline code. Implemented so far: `audit_raw_data.py` |
+| `src/` | Preliminary preparation: `prepare_data.py`; read-only audit wrapper: `audit_raw_data.py`. Guide: `docs/preparation.md`; settings: `config/preparation.json`; tests: `tests/` |
 | `notebooks/` | Exploration notebooks (none yet) |
 | `outputs/figures/` | Generated figures (none yet) |
 
@@ -57,9 +57,11 @@ Both raw files share the key columns `time` (YYYY-MM-DD), `point_id` (0-15), `la
 ## Common commands
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 # the two raw CSVs are already in data/raw/ after cloning, then:
 python src/audit_raw_data.py
+python src/prepare_data.py
+python -W error -m unittest discover -s tests -v
 ```
 
 ## Work plan
