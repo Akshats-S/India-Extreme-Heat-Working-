@@ -128,7 +128,7 @@ def copy_sources(staging, mode):
 
 def build_package(mode, output_dir, python):
     deadline = "2026-11-06" if mode == "preliminary" else "2026-11-30"
-    name = f"india-extreme-heat-{mode}-{deadline}"
+    name = "Preliminary Assessment - Group 3" if mode == "preliminary" else f"india-extreme-heat-{mode}-{deadline}"
     output_dir.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="heat-submission-build-") as temporary:
         base = Path(temporary).resolve()

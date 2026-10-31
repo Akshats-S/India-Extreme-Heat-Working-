@@ -9,7 +9,8 @@ plus the original inputs, preparation settings and dependencies needed to run it
 Final-stage documentation, heat analysis, figures, tests and build records
 are excluded. The working repository retains development and verification material.
 
-Extract the preliminary ZIP to a fresh folder and open PowerShell inside it.
+Extract `Preliminary Assessment - Group 3.zip` to a fresh folder and open
+PowerShell inside the extracted `Preliminary Assessment - Group 3` folder.
 Use Python 3.11+ (3.12.10 was tested). Create an environment beside the copy:
 
 ```powershell
@@ -76,7 +77,7 @@ Development tests and packaging templates remain in the working repository.
 Assessment folders contain the code and inputs used at runtime; both are
 executed independently during package verification.
 
-Use the matching dated ZIP or complete assessment folder and follow the portal's
+Use the matching ZIP or complete assessment folder and follow the portal's
 required format/identity fields. GitHub publication is separate from course upload.
 
 ## Interpretation limits

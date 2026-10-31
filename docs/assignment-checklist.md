@@ -39,9 +39,10 @@ data-sharing arrangements are resolved; IMD source attribution is retained.
 ## Published copies
 
 The [submission repository](https://github.com/Akshats-S/india-extreme-heat-submission)
-contains `preliminary-2026-11-06/` and `final-2026-11-30/`, each with a complete
+contains `Preliminary Assessment - Group 3/` and `final-2026-11-30/`, each with a complete
 README, data, code and reproduction instructions. The package builder also
-writes dated ZIPs to the sibling `Submissions` directory.
+writes `Preliminary Assessment - Group 3.zip` and the dated final ZIP to the
+sibling `Submissions` directory.
 
 Use the course portal's requested upload format and complete any required
 IDs/section fields. GitHub publication is not confirmation of course submission.

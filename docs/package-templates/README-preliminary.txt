@@ -37,9 +37,11 @@ original temperature values and saves the complete city-date table as
 ## Reproduction
 
 Python 3.11+ is required; the code was tested with Python 3.12.10.
-Open a terminal in the preliminary assessment folder: the folder containing
-`README.md`, `requirements.txt`, `src` and `config`. Run these commands in order:
+Open a terminal in the folder containing `Preliminary Assessment - Group 3`.
+Run these commands in order. If you are already inside the assessment folder,
+skip the first command.
 
+    cd "Preliminary Assessment - Group 3"
     python -m pip install -r requirements.txt
     python src/prepare_data.py --skip-heat
 
