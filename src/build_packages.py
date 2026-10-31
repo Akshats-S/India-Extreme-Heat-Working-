@@ -19,8 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CORE_DOCS = ["preparation.md", "methodology.md", "source-metadata.md", "data-dictionary.md",
-             "heat-output-schema.md", "research-questions.md", "review-guide.md", "verification-log.md",
-             "assignment-checklist.md", "analysis-guide.md", "topic-outline.md", "handout/Instructions.pdf"]
+             "heat-output-schema.md", "analysis-guide.md", "handout/Instructions.pdf"]
 
 
 def digest(path):
@@ -96,9 +95,10 @@ def copy_sources(staging, mode):
         selected = [ROOT / name for name in
                     ("src/prepare_data.py", "config/cities.geojson", "config/preparation.json")]
     else:
-        selected = [ROOT / "requirements.txt", ROOT / "requirements-preliminary.txt", ROOT / "data/README.md"]
-        for pattern in ("src/*.py", "tests/test_*.py", "config/*.json", "config/*.geojson", "docs/package-templates/*.txt"):
-            selected.extend(ROOT.glob(pattern))
+        selected = [ROOT / name for name in (
+            "requirements.txt", "src/prepare_data.py", "src/heat_metrics.py",
+            "src/analyze_data.py", "src/run_project.py", "config/cities.geojson",
+            "config/preparation.json", "config/heat_metrics.json", "config/source_metadata.json")]
         selected.extend(ROOT / "docs" / name for name in CORE_DOCS)
     selected.extend((ROOT / "data/raw").glob("*.csv"))
     for source in selected:
@@ -122,14 +122,6 @@ def copy_sources(staging, mode):
         template = template.replace("{{" + field + "}}", value)
     (staging / "README.md").write_text(template, encoding="utf-8")
     if mode == "final":
-        (staging / "COVER.md").write_text(
-            f"# India extreme heat - {mode} assessment\n\nCourse: {metadata['course']} ({metadata['academic_year']})\n\n"
-            f"Team: {names}\n\n"
-            + (f"Section: {section}\n\n" if section else "")
-            + f"Deadline: {metadata[mode + '_deadline']}\n",
-            encoding="utf-8")
-    if mode == "final":
-        shutil.copy2(ROOT / "docs/topic-outline.md", staging / "TOPIC_OUTLINE.md")
         shutil.copy2(ROOT / "docs/research-questions.md", staging / "RESEARCH_QUESTIONS.md")
     return bool(members)
 
@@ -152,9 +144,8 @@ def build_package(mode, output_dir, python):
         if first != generated_hashes(staging):
             raise ValueError(mode + ": repeated regeneration changed output bytes.")
         print(f"{mode}: repeated outputs match; running all tests...", flush=True)
-        # Development tests stay outside the deliberately minimal preliminary hand-in.
-        test_directory = ROOT if mode == "preliminary" else staging
-        tests = run(python, test_directory, ["-m", "unittest", "discover", "-s", "tests", "-v"])
+        # Development tests stay in the working source; both hand-ins are run directly below.
+        tests = run(python, ROOT, ["-m", "unittest", "discover", "-s", "tests", "-v"])
         match = re.search(r"Ran (\d+) tests?", tests.stderr)
         if not match:
             raise ValueError("Unable to establish the executed test count.")
@@ -162,6 +153,7 @@ def build_package(mode, output_dir, python):
             raise ValueError("Raw inputs changed during package verification.")
         checks = {"status": "passed", "mode": mode, "tests_run": int(match.group(1)),
                   "tests_return_code": 0, "repeated_output_hashes_match": True,
+                  "tests_run_from": "working source",
                   "raw_inputs_unchanged": True, "team_names_present": names_complete,
                   "source_file_fingerprints": "MANIFEST.json", "regeneration_command": "python " + " ".join(command),
                   "generated_files_sha256": first}

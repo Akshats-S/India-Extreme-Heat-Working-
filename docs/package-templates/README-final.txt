@@ -12,8 +12,8 @@ Final deadline: November 30, 2026 (course handout).
 To what extent has the frequency of extreme nighttime heat changed relative
 to extreme daytime heat across major Indian cities between 2001 and 2024?
 
-This folder provides the cleaned dataset, original inputs, complete code,
-documentation, candidate economics questions, descriptive results and figures.
+This folder provides the cleaned dataset, original inputs, runtime code,
+scientific documentation, candidate economics questions, results and figures.
 It is a replication package with descriptive findings and candidate economics
 applications. It does not claim causal policy effects.
 
@@ -28,14 +28,11 @@ Run the complete preparation and analysis with one command:
 
     python src/run_project.py
 
-Run all automated tests:
-
-    python -W error -m unittest discover -s tests -v
-
 No raw-data download or manual spreadsheet editing is required because the
 original CSVs are bundled under the project's confirmed sharing arrangements.
 Dependency installation requires access to a package index or preinstalled
-matching packages. PACKAGE_CHECKS.json records fresh-copy verification;
+matching packages. PACKAGE_CHECKS.json records working-source tests and
+standalone reproduction;
 MANIFEST.json fingerprints the included files. Figures are PNGs, so they
 regenerate without an interactive desktop.
 
@@ -129,9 +126,9 @@ Sensitivity checks are not confidence intervals or causal evidence.
 - outputs/analysis/results-note.md: computed descriptive findings and limits.
 - outputs/analysis/: six summary/sensitivity CSVs plus analysis_report.json.
 - outputs/figures/: five reproducible PNGs.
-- RESEARCH_QUESTIONS.md and TOPIC_OUTLINE.md: written academic components.
-- docs/: source evidence, method, complete schemas, review guide and verification.
-- src/, config/, tests/ and requirements.txt: all reproducible code/settings.
+- RESEARCH_QUESTIONS.md: the three candidate economics applications.
+- docs/: source evidence, method, data schemas and the course handout.
+- src/, config/ and requirements.txt: runtime code, settings and dependencies.
 
-See docs/review-guide.md for replication and manual spot checks. Team and
-course details are in COVER.md.
+Team and course details appear at the top of this README. Detailed definitions
+and schemas are in docs/methodology.md and docs/heat-output-schema.md.

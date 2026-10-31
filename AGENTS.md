@@ -52,3 +52,8 @@ submission repository they are committed, and Git must preserve their packaged
 bytes so final manifests and recorded validation fingerprints remain valid.
 The preliminary hand-in contains only the requested dataset, preparation code,
 brief outline and essential runtime files; tests/build records remain outside it.
+
+Submission copies exclude development tests, package builders, authoring
+templates and duplicate write-ups. Keep those maintenance assets only in this
+working repository. Instructions.pdf is a protected comparison reference; keep
+all existing copies unchanged.

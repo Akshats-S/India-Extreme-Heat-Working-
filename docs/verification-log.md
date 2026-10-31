@@ -38,8 +38,9 @@ records; no independent human sign-off is recorded.
 
 - The complete automated suite runs with warnings treated as errors in an
   isolated Python 3.12.10 environment installed from the pinned requirements.
-  Actual per-build test counts/results are in the outer build report and the
-  final package check record. The suite includes real-data acceptance and deliberately
+  Tests run from the working source; actual counts/results are in the outer
+  build report and final package check record. Assessment copies are executed
+  separately to verify their complete runtime inputs. The suite includes real-data acceptance and deliberately
   faulty inputs, percentile/leap/missingness calculations, aggregation,
   provenance, plot ranges, manifests and package source inclusion.
 - Each package was generated twice in fresh staging; outputs matched byte

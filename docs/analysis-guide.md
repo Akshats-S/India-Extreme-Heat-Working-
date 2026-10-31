@@ -57,22 +57,22 @@ limitations. No causal policy, mortality, demand or welfare effect is estimated.
 
 ## Packages
 
-`python src/build_packages.py` builds preliminary/final ZIPs under the sibling
+From the working repository, `python src/build_packages.py` builds both ZIPs in the sibling
 `Submissions` directory. It copies an explicit source/documentation whitelist,
 regenerates outputs twice in a fresh staging folder, runs the complete tests,
 checks raw-file preservation, builds and extracts each ZIP, and verifies exact
 regeneration from the extracted copy. The preliminary hand-in contains eight
 essential files; its tests and file fingerprints remain outside the hand-in
-in the working project's build report. The final package includes its tests,
-manifest and verification records. Preliminary tests run from the working
-source, including an actual standalone run without final-analysis modules.
+in the working project's build report. The final package includes runtime code, scientific documentation, a
+manifest and verification records. All development tests run from the working
+source, including actual standalone runs of the assessment copies.
 Compiled caches, Git history, credentials and assistant instruction files are
 excluded. Original source data remain unchanged.
 
 Use `--verify-python PATH` to verify with another Python environment that has
 the pinned requirements installed. A fresh isolated environment was used for
 the final package verification; execution evidence is in the verification log.
-Team/course metadata is stored in `config/submission.json`. After source or
+Team/course metadata is stored in the working repository's `config/submission.json`. After source or
 documentation corrections, rebuild the ZIPs and refresh the matching folders
 in the submission repository. The builder creates local packages; course
 submission uses the course's specified channel.

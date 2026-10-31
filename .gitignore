@@ -25,11 +25,8 @@ Thumbs.db
 
 # Generated artifacts are bundled by build_packages.py, not tracked here.
 data/processed/*
-!data/processed/.gitkeep
 outputs/analysis/*
-!outputs/analysis/.gitkeep
 outputs/figures/*
-!outputs/figures/.gitkeep
 
 # Original IMD CSVs remain tracked; avoid accidental gridded-file additions.
 *.nc

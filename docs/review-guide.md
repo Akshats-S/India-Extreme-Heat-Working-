@@ -51,7 +51,6 @@ From the final folder, after installing dependencies:
 ```powershell
 python -m pip install -r requirements.txt
 python src/run_project.py
-python -W error -m unittest discover -s tests -v
 ```
 
 This regenerates seven preparation files, six analysis CSVs, a results note,
@@ -63,8 +62,7 @@ stay outside its minimal hand-in in the outer package_build_report.json.
 
 ## Reading and spot checks
 
-- The preliminary source and brief research question are in README.md; the
-  final package also has TOPIC_OUTLINE.md.
+- Both assessment READMEs contain the source and research topic.
   Check city/date rows against the original CSVs without editing originals.
 - Final docs/methodology.md defines P90, the fixed reference, seasonal windows,
   strict exceedance and paired dates. Missing heat flags are blank, not False.
@@ -74,9 +72,9 @@ stay outside its minimal hand-in in the outer package_build_report.json.
 - Final RESEARCH_QUESTIONS.md gives three economics applications with course
   techniques and additional evidence needs.
 
-For development checks, run the complete suite from the working repository or
-final package. The preliminary folder deliberately contains no test suite or
-final-stage code. Its standalone runtime is verified during package building.
+Development tests and packaging templates remain in the working repository.
+Assessment folders contain the code and inputs used at runtime; both are
+executed independently during package verification.
 
 Use the matching dated ZIP or complete assessment folder and follow the portal's
 required format/identity fields. GitHub publication is separate from course upload.
