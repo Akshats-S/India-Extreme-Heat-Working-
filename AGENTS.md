@@ -1,80 +1,52 @@
-# AGENTS.md - read this first (AI coding assistants)
+# Repository instructions
 
-> **VERY IMPORTANT: NO AI AUTHORSHIP, UNDER ANY CIRCUMSTANCE.** Everything in this repository is authored by the team members under their own GitHub names. AI tools (Claude, Claude Code, ChatGPT, Codex, Gemini, Copilot or any other) may help, but must never be credited or named as author or co-author: no `Co-Authored-By` lines, no "Generated with ..." footers, no tool or session links in commits, pull requests, issues, files or docs. If a tool adds such a line by default, delete it before committing or opening the pull request.
+## Project
 
-This file is for any AI assistant or chatbot a teammate uses on this repository (Claude, ChatGPT, Copilot, Cursor, Gemini, etc.). Read it fully before suggesting or writing anything.
+The Environmental Economics dataset and replication packages are complete.
+Maintain the source here; publish assessment copies in
+`Akshats-S/india-extreme-heat-submission`, with separate preliminary/final folders.
+No implementation tasks remain assigned to teammates.
 
-## Project in 60 seconds
+The primary question compares extreme nighttime and daytime heat across 16
+Indian city-associated IMD grid points during 2001-2024. The panel has 140,256
+rows and one absent temperature pair: Guwahati, 2005-06-26. Read
+`docs/methodology.md` before changing measurements and `docs/review-guide.md`
+for replication and submission contents.
 
-- **What:** university Environmental Economics empirical project (course: Introduction to Environmental Economics, AY 2026-27). Goal: prepare a clean, reproducible dataset, document the preparation process, and identify environmental economics research applications. Causal identification and full econometric analysis are not required.
-- **Research question (the project's primary question):** To what extent has the frequency of extreme nighttime heat changed relative to extreme daytime heat across major Indian cities between 2001 and 2024?
-- **Study period:** 1 Jan 2001 - 31 Dec 2024 (8,766 calendar days).
-- **Cities (16):** Delhi, Jaipur, Ahmedabad, Mumbai, Pune, Lucknow, Patna, Kolkata, Bhopal, Nagpur, Hyderabad, Bengaluru, Chennai, Bhubaneswar, Guwahati, Kochi.
-- **Data:** India Meteorological Department (IMD) daily gridded maximum (Tmax) and minimum (Tmin) temperature, 1 degree resolution, downloaded from IMDWeb (https://imdweb.lwcc.in/). Two CSVs, one per variable. These are gridded values, not urban weather-station readings.
-- **Deadline:** replication package due 30 November 2026. Groups of up to 3.
-- **Language/tooling:** Python 3, pandas. Dependencies live in `requirements.txt`.
-- **Two repositories:** this repository (`India-Extreme-Heat-Working-`) is the working and final source. A separate repository (`india-extreme-heat-submission`) will hold only what the course handout asks for, built from this one at the end. See `docs/assignment-checklist.md`.
+## Maintenance rules
 
-## Rules
+- Preserve `data/raw/` exactly. Write derived data to `data/processed/` and
+  analysis artifacts to `outputs/`. Never commit credentials or local environments.
+- Never invent observations, results, source metadata or human sign-off.
+  Automated execution records are in `docs/verification-log.md`.
+- Keep percentile, baseline, leap-day, missingness and denominator choices
+  explicit in configuration and documented when changed.
+- Use feature branches and pull requests; do not push directly to `main`.
+  The lead's changes do not require a separate teammate approval.
+- Update source/templates, rebuild packages and copy verified deliverables to
+  the submission repository. Keep both assessment folders self-contained.
+- Keep scientific limitations and source attribution in the deliverables.
+- Use the team's Git identity. Do not add tool authorship/co-authorship,
+  generated-by footers or session links to commits, PRs or project files.
+- The instructor permits AI assistance; responsibility for academic review
+  remains with the submitting students. Do not fabricate completed review.
 
-1. **AI use is allowed for all parts of this project** (code, analysis, writing). The original handout limited AI to coding and verification, but the course instructor has since confirmed full freedom to use AI tools. The humans remain responsible: everything must be read and verified by a team member before it is relied on or submitted (the instructors will review the code).
-2. **Never invent** data, statistics, results, thresholds, or processing decisions, and never present guesses as facts. Report only what code actually outputs, and label assumptions as assumptions.
-3. **Open decisions belong to the team.** How extreme days/nights are defined, city-to-grid mapping, and similar choices are listed in `docs/methodology.md` (section 4 and 'DECISION PENDING' items). You may propose options with trade-offs, but make choices explicit parameters in code and have the team record its decision in the decision log.
-4. **Raw IMD CSVs are committed in `data/raw/`** (team decision: internal use; this repo is public). Do not modify or overwrite them; write all derived data to `data/processed/`. Never commit credentials or personal files.
-5. **Do not push to `main`.** Use a branch and a pull request (see `CONTRIBUTING.md`).
-6. **Keep documentation honest:** distinguish completed work from planned/pending work, and update docs when behaviour changes. Record human verification in `docs/verification-log.md`.
-7. **Review workflow clarified by the technical lead on 2026-10-31:** teammate contributions are reviewed by the technical lead (`Akshats-S`). The lead's own work does not require a separate teammate approval. Continue using feature branches and pull requests, run the relevant automated checks, and integrate authorized work without waiting for an external reviewer. Do not describe automated checks as completed human verification.
+## Commands
 
-## Repository map
-
-| Path | Purpose |
-|------|---------|
-| `README.md` | Human overview with a quick read at the top |
-| `AGENTS.md` | This file (assistant instructions); `CLAUDE.md` and `.github/copilot-instructions.md` point here |
-| `CONTRIBUTING.md` | Branch / commit / pull request workflow |
-| `data/README.md` | Data source, download steps, which file is which |
-| `data/raw/` | Raw IMD CSVs (tmax, tmin), committed, read-only |
-| `data/processed/` | Pipeline outputs (git-ignored by default) |
-| `config/cities.geojson` | The 16 city points (matches the point coordinates in both CSVs) |
-| `docs/data-dictionary.md` | Column definitions and observed structural facts about the raw files |
-| `docs/methodology.md` | Technical outline and open decisions, decision log |
-| `docs/assignment-checklist.md` | Course handout requirements vs. status, open questions for the instructor |
-| `docs/research-questions.md` | Three completed candidate economics applications; extra data/identification requirements explicit |
-| `docs/verification-log.md` | Record of human verification of each step |
-| `src/` | Preparation: `prepare_data.py`; heat methods: `heat_metrics.py`; audit: `audit_raw_data.py`; analysis: `analyze_data.py`; full workflow: `run_project.py`; packages: `build_packages.py`. Config includes preparation/heat_metrics/source_metadata/submission JSON. Guides and schemas under docs/; tests under tests/ |
-| `notebooks/` | Not required; all reproduction runs through source scripts |
-| `outputs/figures/` | Five generated, git-ignored PNG figures; `outputs/analysis/` holds tables/results/report |
-
-## Raw data schema (details in docs/data-dictionary.md)
-
-Both raw files share the key columns `time` (YYYY-MM-DD), `point_id` (0-15), `lat`, `lon` (city point). The max file adds `tmax_cell_lat`, `tmax_cell_lon`, `tmax`; the min file adds `tmin_cell_lat`, `tmin_cell_lon`, `tmin`. Identify a file by its value column (`tmax` or `tmin`), never by its filename. The files omit units, but IMD product documentation establishes Celsius (see docs/source-metadata.md); exact export clock-time alignment remains unverified. `point_id` 0-15 follows the order of the city list above and of `config/cities.geojson`.
-
-## Known data facts (verified by `src/audit_raw_data.py`)
-
-- Each file has 140,255 rows and no empty cells; no duplicate (time, point_id) rows.
-- 16 points x 8,766 days would be 140,256 rows; one location-date is absent from both files: point_id 14 (Guwahati), 2005-06-26.
-- The two files match exactly on (time, point_id).
-
-## Common commands
-
-```bash
+```powershell
 python -m pip install -r requirements.txt
-# the two raw CSVs are already in data/raw/ after cloning, then:
-python src/audit_raw_data.py
-python src/prepare_data.py
+python src/run_project.py --preliminary
 python src/run_project.py
-python src/build_packages.py
+python src/audit_raw_data.py
 python -W error -m unittest discover -s tests -v
+python src/build_packages.py
 ```
 
-## Work plan
+`prepare_data.py` audits/merges; `heat_metrics.py` defines research variables;
+`analyze_data.py` generates summaries/figures; `run_project.py` sequences the
+workflow; `build_packages.py` builds and verifies both ZIPs. Tests cover valid
+inputs, deliberately faulty examples, known-answer calculations and packaging.
 
-Work is tracked as GitHub Issues #1-#7 (audit, merge, validate, define thresholds, generate cleaned dataset, exploratory visuals, finalize docs). Each has acceptance criteria. The handout requires the final pipeline to run with no manual steps. Before starting, check the issue and ask the user which one they are working on.
-
-## Definition of done for any change
-
-- Code runs from a clean checkout (given the raw files locally).
-- No data files or secrets in the diff.
-- Docs updated; pending vs done is accurate.
-- Verification evidence is recorded honestly in `docs/verification-log.md`; do not invent human sign-off. Separate teammate approval is not a gate for the technical lead's own work.
-- Opened as a pull request linked to its Issue.
+In the working repository, generated data/figures are git-ignored. In the
+submission repository they are committed, and Git must preserve their packaged
+bytes so `MANIFEST.json` and validation fingerprints remain valid.

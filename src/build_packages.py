@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CORE_DOCS = ["preparation.md", "methodology.md", "source-metadata.md", "data-dictionary.md",
              "heat-output-schema.md", "research-questions.md", "review-guide.md", "verification-log.md",
-             "assignment-checklist.md", "project-roadmap.md", "preliminary-assessment.md", "analysis-guide.md", "topic-outline.md", "handout/Instructions.pdf"]
+             "assignment-checklist.md", "analysis-guide.md", "topic-outline.md", "handout/Instructions.pdf"]
 
 
 def digest(path):
@@ -107,16 +107,18 @@ def copy_sources(staging, mode):
     if not isinstance(members, list) or any(not isinstance(name, str) or not name.strip() for name in members):
         raise ValueError("team_members must be a list of nonempty names.")
     names = "; ".join(members) if members else "ADD TEAM MEMBER NAMES BEFORE SUBMISSION"
-    section = metadata["course_section"] or "Not specified; add only if required"
+    section = metadata["course_section"]
     template = (ROOT / f"docs/package-templates/README-{mode}.txt").read_text(encoding="utf-8")
+    if not section:
+        template = template.replace("Section: {{SECTION}}\n", "")
     for field, value in (("COURSE", metadata["course"]), ("YEAR", metadata["academic_year"]), ("TEAM", names), ("SECTION", section)):
         template = template.replace("{{" + field + "}}", value)
     (staging / "README.md").write_text(template, encoding="utf-8")
     (staging / "COVER.md").write_text(
         f"# India extreme heat - {mode} assessment\n\nCourse: {metadata['course']} ({metadata['academic_year']})\n\n"
-        f"Team: {names}\n\nSection: {section}\n\n"
-        f"Deadline: {metadata[mode + '_deadline']}\n\n"
-        "Package assembled and checked locally. It has not been uploaded or submitted.\n",
+        f"Team: {names}\n\n"
+        + (f"Section: {section}\n\n" if section else "")
+        + f"Deadline: {metadata[mode + '_deadline']}\n",
         encoding="utf-8")
     shutil.copy2(ROOT / "docs/topic-outline.md", staging / "TOPIC_OUTLINE.md")
     if mode == "final":

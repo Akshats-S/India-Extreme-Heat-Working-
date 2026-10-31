@@ -9,7 +9,8 @@ Custom analyses can use `--heat-config path/to/settings.json --output-dir path/t
 Outputs contain no run timestamp or absolute input paths. The report includes
 the settings, metadata, software versions and file fingerprints. An analysis
 with changed settings must use its own output directory to preserve earlier
-results. All generated outputs remain git-ignored.
+results. Generated outputs are git-ignored in the working repository and
+included in the submission copies.
 
 ## Daily table: daily_temperatures.csv
 

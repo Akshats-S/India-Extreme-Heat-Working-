@@ -72,5 +72,5 @@ even if a custom preparation configuration relaxes the broad upper bound.
 Finite values, unique keys, full calendar coverage, nearest-grid agreement,
 cross-file grid agreement and Tmin <= Tmax are checked separately. The real
 inputs pass these checks. Original CSVs and their full numerical precision
-remain unchanged. The technical lead has already confirmed project data
-sharing is resolved; no new general license is asserted here.
+remain unchanged. Project data sharing is resolved; IMD attribution and
+source links are retained in the replication packages.
