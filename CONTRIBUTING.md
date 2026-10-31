@@ -54,7 +54,7 @@ This is a small university research group project. The workflow below keeps `mai
 
 - Point your assistant at [AGENTS.md](AGENTS.md) first; it contains the project context, the data schema and the rules above.
 - AI tools may be used for any part of the work (code, analysis, writing).
-- You remain responsible for everything you commit. Review AI-written code before opening a pull request, and do not paste raw IMD data or credentials into an AI tool or into the repository (IMD's redistribution terms are unconfirmed).
+- You remain responsible for everything you commit. Keep credentials out of tools and Git, preserve raw source files, and follow the project-sharing arrangements confirmed by the technical lead. Automated checks are not labeled as human sign-off.
 
 ## Branch protection
 

@@ -1,8 +1,8 @@
 # Data preparation and heat workflow
 
 Scope: Issues #2-#5, including the phase 1 measurement method and phase 2
-research variables. Final figures, economics questions and submission packaging
-remain. The numbered steps below describe shared raw preparation; heat steps
+research variables. Figures, economics questions and verified submission ZIPs
+are also implemented. The numbered steps below describe shared raw preparation; heat steps
 are documented in [methodology.md](methodology.md) and [heat-output-schema.md](heat-output-schema.md).
 
 ## Run

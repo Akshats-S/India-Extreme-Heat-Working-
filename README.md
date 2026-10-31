@@ -16,8 +16,8 @@ Empirical analysis of extreme daytime and nighttime temperature trends across 16
 | **Data** | IMD daily gridded maximum (Tmax) and minimum (Tmin) temperature, 1° resolution, from [IMDWeb](https://imdweb.lwcc.in/). Two CSVs (one per variable), 140,255 rows each. |
 | **Raw data in Git?** | **Yes.** The two raw IMD CSVs are committed in `data/raw/` for team use. This repo is public, so they are publicly downloadable. See [`data/README.md`](data/README.md). |
 | **Course handout** | [`docs/handout/Instructions.pdf`](docs/handout/Instructions.pdf) |
-| **Status** | Phases 1/2 implemented: cited measurement method, validated daily warm-day/night indicators, thresholds and annual/period summaries. 34 automated tests pass; figures, final economics questions and final packaging remain. |
-| **Two repositories** | This repo is the working and final source. A separate repo, `india-extreme-heat-submission`, holds only what the course handout asks for and is built from this one at the end. |
+| **Status** | All five phases implemented: validated datasets, documented measurement method, five figures/four specifications, computed results, three economics applications and both verified packages. 42 tests passed in each fresh package. Team names are included; your review, any required portal fields and actual submission remain user actions. |
+| **Source and submission** | This repo is the source. The two self-contained ZIPs are built in the sibling `Submissions` folder. The separate private submission repository has not been modified. |
 | **Using an AI assistant?** | Start with [`AGENTS.md`](AGENTS.md). AI tools may be used for all parts of the project (confirmed by the course instructor); a team member must verify everything that is submitted. |
 
 ## Getting started
@@ -27,12 +27,14 @@ git clone https://github.com/Akshats-S/India-Extreme-Heat-Working-.git
 cd India-Extreme-Heat-Working-
 python -m pip install -r requirements.txt
 # The two raw CSVs are already in data/raw/ after cloning, then:
-python src/prepare_data.py
+python src/run_project.py
 ```
 
-This audits, merges and validates both raw files, fits fixed seasonal thresholds, and writes seven files in `data/processed/`: the extended daily panel, threshold table, annual heat summaries, early/late comparisons, coverage and JSON/text reports. The panel has 140,256 rows; Guwahati, 2005-06-26 remains blank and explicitly flagged. Raw data is unchanged. See [the preparation guide](docs/preparation.md), [methodology](docs/methodology.md) and [final output schema](docs/heat-output-schema.md). Use `--skip-heat` for the temperature-only preliminary workflow.
+This regenerates the seven prepared data/report files plus six analysis CSVs, a computed results note, an analysis report and five PNG figures. The daily panel has 140,256 rows; Guwahati, 2005-06-26 remains blank and flagged. Raw data is unchanged. Use `python src/run_project.py --preliminary` for the 16-column temperature-only dataset and its three reports. See [preparation](docs/preparation.md), [methodology](docs/methodology.md), [output schemas](docs/heat-output-schema.md) and [analysis/package instructions](docs/analysis-guide.md).
 
-Read-only audit: `python src/audit_raw_data.py`. Tests: `python -W error -m unittest discover -s tests -v`. Tests include synthetic faulty inputs and real-data acceptance checks when raw files are available. Human verification remains pending. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) for branches and pull requests.
+**Review and submit:** follow [the review guide](docs/review-guide.md). Team names are recorded in `config/submission.json`; run `python src/build_packages.py` to build the two dated ZIPs in the sibling `Submissions` folder. Each build reruns the relevant workflow, tests, hashes and extracted-ZIP reproduction. Submit the ZIPs/folders through the course's channel; generated data/figures are git-ignored and are included by the package builder, not a GitHub source download.
+
+Read-only audit: `python src/audit_raw_data.py`. Tests: `python -W error -m unittest discover -s tests -v`. Tests cover synthetic faults, known-answer calculations, plot ranges, manifests and actual raw data. Automated checks are distinguished from your own review. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) for branches and pull requests.
 
 The [preliminary assessment note](docs/preliminary-assessment.md) contains the brief topic outline, available deliverables and the remaining team/submission checks for November 6.
 
@@ -48,6 +50,16 @@ The [preliminary assessment note](docs/preliminary-assessment.md) contains the b
 | City coordinates | [`config/cities.geojson`](config/cities.geojson) (16 city points; matches the point coordinates in both CSVs) |
 
 Column definitions and observed structure are in [`docs/data-dictionary.md`](docs/data-dictionary.md). The raw files are committed in `data/raw/`. The technical lead confirmed topic registration/finalization and resolution of the project's data-sharing issue on 2026-10-31; see [`docs/assignment-checklist.md`](docs/assignment-checklist.md). Separate teammate approval is not required for the lead's own work.
+
+## Environmental economics relevance
+
+Daytime/nighttime exposure patterns motivate adaptation timing, public cooling
+access, energy-efficient protection, budget allocation and distributional
+questions. The completed [candidate research questions](docs/research-questions.md)
+connect the dataset to cost-benefit/discounting, instrument comparison and
+treatment-effect reasoning. Each states the cost, population, policy and
+outcome data needed beyond temperatures; the descriptive results do not
+identify welfare or causal policy effects.
 
 ## Daily maximum vs. minimum temperature
 
@@ -81,22 +93,27 @@ India-Extreme-Heat-Working-/
 │   ├── cities.geojson     The 16 city points
 │   ├── preparation.json   Dates, coordinate tolerance and explicit missing-record policy
 │   ├── heat_metrics.json  Fixed seasonal-percentile method and coverage rules
-│   └── source_metadata.json  IMD units, grid and source-documentation links
+│   ├── source_metadata.json  IMD units, grid and source-documentation links
+│   └── submission.json     Team names, course and submission dates
 ├── src/
 │   ├── README.md
 │   ├── audit_raw_data.py  Read-only audit using the preparation checks
 │   ├── prepare_data.py    Audit, merge, validate and write all outputs
-│   └── heat_metrics.py    Fixed thresholds, daily indicators and annual/period summaries
+│   ├── heat_metrics.py    Fixed thresholds, daily indicators and annual/period summaries
+│   ├── analyze_data.py    Descriptive tables, sensitivity checks, figures and results
+│   ├── run_project.py     One command for preparation and analysis
+│   └── build_packages.py  Build and verify both submission ZIPs
 ├── tests/                Synthetic edge cases and real-data acceptance checks
-├── notebooks/             Exploration notebooks (none yet)
+├── notebooks/             Optional; reproduction uses source scripts
 ├── outputs/
-│   └── figures/           Generated figures (none yet)
+│   ├── figures/           Five generated PNGs (git-ignored)
+│   └── analysis/          Six CSVs, computed results and analysis report (git-ignored)
 └── docs/
     ├── data-dictionary.md       Columns, file identification, observed structure
-    ├── methodology.md           Technical outline, open decisions, decision log
+    ├── methodology.md           Implemented method, limitations and decision log
     ├── assignment-checklist.md  Course requirements vs. status
-    ├── research-questions.md    Candidate research questions (template)
-    └── verification-log.md      Who verified which step
+    ├── research-questions.md    Three completed economics applications
+    └── verification-log.md      Automated evidence and actual human verification
 ```
 
 Empty folders contain a `.gitkeep` placeholder so Git tracks them.
@@ -112,28 +129,26 @@ Tracked as GitHub Issues. Open decisions are in [`docs/methodology.md`](docs/met
 | 3 | Validate missing values, duplicates, temperature ranges, spatial coverage | Implemented with explicit broad QC bounds and nearest-grid checks; no claim of independent human sign-off |
 | 4 | Define extreme daytime and nighttime thresholds | Implemented as configurable project-relative seasonal percentiles; departures from official indices documented |
 | 5 | Generate the cleaned reproducible dataset (must run with no manual steps) | Implemented, including heat indicators and annual/period tables |
-| 6 | Exploratory visualizations and summary statistics | Pending |
-| 7 | Finalize documentation and verify reproducibility | Pending |
+| 6 | Exploratory visualizations and summary statistics | Implemented: six summary/sensitivity CSVs, five labeled figures and computed results |
+| 7 | Finalize documentation and verify reproducibility | Written components and verified-package workflow implemented; see per-package checks and review guide; no submission claimed |
 
 ## Reproducibility
 
 | Step | Status |
 |------|--------|
 | Document data source and download process | Done (`data/README.md`) |
-| Obtain raw data from IMDWeb into `data/raw/` | Done; project sharing arrangements confirmed resolved by the technical lead. Final package assembly/reproduction pending |
+| Obtain raw data from IMDWeb into `data/raw/` | Done; sharing arrangements resolved and original inputs included in both verified packages |
 | Raw-file audit script | Done (`src/audit_raw_data.py`) |
-| Pin exact dependency versions | Done for the preliminary pipeline (Python 3.12.10 tested) |
+| Pin exact dependency versions | Done for the complete workflow; Python 3.12.10 tested in a fresh isolated environment |
 | Processing scripts for merge, validation, thresholds, cleaned dataset | Implemented and tested, including fixed reference thresholds and annual/period summaries |
-| One command to regenerate the cleaned dataset | `python src/prepare_data.py` (raw files already local) |
+| One command to regenerate the cleaned dataset | `python src/run_project.py` (raw files already local; `--preliminary` for temperature-only output) |
 | End-to-end reproduction | Automated tests and repeated-output comparison; actual verification recorded honestly in [verification log](docs/verification-log.md); no separate teammate-review gate for lead-owned work |
 
-## Next steps
+## Review and submission
 
-1. Follow the remaining phases in [the project roadmap](docs/project-roadmap.md); topic registration and the data-sharing issue are resolved.
-2. Build descriptive outputs and sensitivity checks using the documented method (#6); retain the source-date/network limitations.
-3. Complete the economics questions and final documentation (#7), then verify the final package.
-4. The raw CSVs are in this public repo by team decision. If that changes, remove them and confirm IMD's redistribution terms.
-5. Write the candidate research questions and the environmental economics relevance note ([`docs/research-questions.md`](docs/research-questions.md)), then build the separate submission repository.
+1. Read [the review guide](docs/review-guide.md), check the method, data gap, computed results and sensitivity limitations, and rerun the documented command in an extracted package.
+2. Check COVER.md/team details and choose the preliminary ZIP for November 6 or final ZIP for November 30. The handoff supplies the preliminary checkpoint; the provided handout specifies the final deliverable.
+3. Upload through the course's specified channel. Neither building the ZIPs nor merging code submits an assessment. The private submission repository remains untouched.
 
 ## Contributing
 
