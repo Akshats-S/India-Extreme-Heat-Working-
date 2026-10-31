@@ -91,8 +91,9 @@ evaluation, and specify extra data needed for monetary or causal estimates.
 - Preliminary: **6 November 2026**, from the team-provided handoff.
 - Final: **30 November 2026**, from the [course handout](docs/handout/Instructions.pdf).
 
-Each submission folder has its own README, data, code, configuration and
-verification records. Repository publication is separate from course-portal
+The preliminary folder contains only the dataset, preparation code, brief
+topic outline and essential runtime inputs/instructions. Full verification
+records and final-stage materials are kept outside that hand-in. Repository publication is separate from course-portal
 submission. Future corrections follow [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Data citation: Srivastava, Rajeevan and Kshirsagar (2009), *Development of a high

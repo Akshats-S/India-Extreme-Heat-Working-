@@ -7,8 +7,11 @@ Team: Akshat Srivastava, Krishna Reddy and Jatin Shetty.
 
 The team-provided handoff specifies a preliminary cleaned dataset, preparation
 code and a brief topic outline. The preliminary package includes those items,
-the original inputs, README, settings, pinned dependencies, validation/coverage
-reports and tests. Its daily table has 140,256 rows and 16 columns.
+a short README and only the raw inputs, preparation settings and dependencies
+needed to run the code. Its daily table has 140,256 rows and 16 columns.
+Final-stage documentation, tests, build records, heat outputs and figures are
+excluded from the preliminary hand-in. Validation/coverage reports are generated
+when the code runs; they are not bundled as extra deliverables.
 
 The provided course PDF does not separately specify this checkpoint.
 

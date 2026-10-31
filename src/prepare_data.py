@@ -17,8 +17,6 @@ from pathlib import Path
 
 import pandas as pd
 
-from heat_metrics import HEAT_OUTPUT_NAMES, build_heat_outputs, load_heat_settings, validate_imd_grid
-
 ROOT = Path(__file__).resolve().parents[1]
 KEY = ["point_id", "date"]
 OUTPUT_COLUMNS = [
@@ -28,7 +26,8 @@ OUTPUT_COLUMNS = [
     "tmax_missing", "tmin_missing", "temperature_pair_complete",
 ]
 OUTPUT_NAMES = ["daily_temperatures.csv", "validation_report.json",
-                "validation_report.txt", "coverage_by_city_year.csv", *HEAT_OUTPUT_NAMES]
+                "validation_report.txt", "coverage_by_city_year.csv",
+                "heat_thresholds.csv", "city_year_heat.csv", "city_period_comparison.csv"]
 MISSING_TOKENS = {"", "na", "nan", "null", "none", "n/a"}
 
 
@@ -365,6 +364,7 @@ def main(argv=None, audit_only=False):
         if not audit_only:
             frames = {"coverage_by_city_year.csv": coverage}
             if not args.skip_heat:
+                from heat_metrics import build_heat_outputs, load_heat_settings, validate_imd_grid
                 settings = load_heat_settings(args.heat_config)
                 metadata = json.loads(args.source_metadata.read_text(encoding="utf-8-sig"))
                 report["source_grid"] = validate_imd_grid(panel, metadata, report["settings"]["coordinate_tolerance"])
