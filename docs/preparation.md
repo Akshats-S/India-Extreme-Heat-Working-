@@ -1,7 +1,9 @@
-# Preliminary data preparation
+# Data preparation and heat workflow
 
-Scope: Issues #2 and #3, and the preliminary temperature-table portion of #5.
-Extreme-heat definitions (#4) and the final submission package remain pending.
+Scope: Issues #2-#5, including the phase 1 measurement method and phase 2
+research variables. Final figures, economics questions and submission packaging
+remain. The numbered steps below describe shared raw preparation; heat steps
+are documented in [methodology.md](methodology.md) and [heat-output-schema.md](heat-output-schema.md).
 
 ## Run
 
@@ -13,7 +15,8 @@ python src/prepare_data.py
 ```
 
 This single preparation command audits both raw files, constructs and validates
-the merged panel, and writes the outputs. No spreadsheet editing is needed.
+the merged panel, fits the fixed seasonal thresholds and writes all seven
+outputs. Use `--skip-heat` for the original temperature-only workflow. No spreadsheet editing is needed.
 The two CSVs must already be available locally. The technical lead confirmed the
 project's data-sharing arrangements are resolved on 2026-10-31. Final package
 assembly and reproduction must still be completed and documented.
@@ -37,8 +40,8 @@ python -W error -m unittest discover -s tests -v
 
 The audit prints JSON and never writes files. Both commands use the same
 validation functions, avoiding different rules for auditing and preparation.
-Tests use clearly synthetic two-city fixtures; the real-data acceptance test
-is skipped if either original CSV is unavailable.
+Tests use clearly synthetic city fixtures and known-answer heat calculations;
+real-data acceptance tests are skipped if either original CSV is unavailable.
 
 ## Exact preparation steps
 
@@ -83,7 +86,11 @@ is skipped if either original CSV is unavailable.
    by `point_id`, then `date`; fix column order; serialize dates consistently and
    numeric values with 17 significant digits. There is no temperature rounding,
    imputation, averaging, interpolation, outlier deletion or unit conversion.
-10. Publish validated CSVs and JSON/text reports. Outputs contain no current
+10. In the default workflow, validate the source metadata/grid, fit thresholds,
+    attach nullable indicators and build annual/period summaries as specified
+    in [methodology.md](methodology.md). Only then publish the validated CSVs
+    and JSON/text reports. With `--skip-heat`, publish the preliminary outputs.
+    Outputs contain no current
     timestamp or absolute input paths, and the report records source/config/city
     SHA-256 hashes (file fingerprints), software versions, settings and the
     dataset fingerprint. Repeating a run on unchanged inputs in the same
@@ -103,18 +110,21 @@ Writing into the repository's raw-data directory, or overwriting an input or
 configuration through an output-name collision, is blocked. Raw files are
 never edited by preparation.
 
-Temperature units, physical plausibility bounds, and observation windows still
-need authoritative confirmation. Consequently there are **no default absolute
-temperature bounds**. Input extrema are reported without claiming they are
-physically plausible. After the team agrees on appropriate bounds, set
-`temperature_min` / `temperature_max` in the JSON config or supply
-`--temperature-min` / `--temperature-max` in source units. These are data-quality
-checks, not extreme-heat definitions. The metadata warning remains visible even
-when a user supplies bounds. No heat-event indicators are implemented here.
+Celsius is established from IMD product documentation. Broad project screening
+bounds are now [-90, 60] Celsius, inclusive; these do not certify local physical
+plausibility. Config or `--temperature-min` / `--temperature-max` can override
+them. The final heat workflow additionally rejects the documented IMD 99.9
+missing sentinel and validates nearest documented grid nodes. These quality
+checks are separate from percentile-based warmth. Exact export clock-time
+alignment remains unverified, so no source-date shift is made. Source evidence
+and limitations are in [source-metadata.md](source-metadata.md).
 
 ## Output files and schema
 
-All four default outputs go into `data/processed/` and are git-ignored.
+The four shared/preliminary files below go into `data/processed/` and are
+git-ignored. The default workflow adds the three heat tables documented in
+[heat-output-schema.md](heat-output-schema.md), and appends five daily columns.
+`--skip-heat` produces only the four preliminary files.
 
 | File | Contents |
 |---|---|
@@ -131,7 +141,7 @@ All four default outputs go into `data/processed/` and are git-ignored.
 | `lat`, `lon` | number | Canonical city-point latitude and longitude |
 | `tmax_cell_lat`, `tmax_cell_lon` | nullable number | Original Tmax cell metadata; blank if Tmax record absent |
 | `tmin_cell_lat`, `tmin_cell_lon` | nullable number | Original Tmin cell metadata; blank if Tmin record absent |
-| `tmax`, `tmin` | nullable number | Original temperature scale; units unverified |
+| `tmax`, `tmin` | nullable number | Original values; Celsius based on documented product provenance |
 | `tmax_record_missing`, `tmin_record_missing` | boolean | Whether that source record was absent |
 | `tmax_missing`, `tmin_missing` | boolean | Whether that temperature is blank |
 | `temperature_pair_complete` | boolean | Both temperatures are present |
@@ -160,5 +170,8 @@ there are no unmatched source records, duplicate keys, city-coordinate
 disagreements, cross-file grid disagreements or Tmin-above-Tmax observations.
 The sole absent key is Guwahati, 2005-06-26, in both files. The complete output
 retains that row with blank temperatures and cell metadata. Coverage has 384
-city-year rows. Validation passes with warnings for the two allowed source
-gaps and unresolved metadata/bounds. Human review remains pending.
+city-year rows. Phase 2 also produced 5,856 threshold rows, 384 annual heat rows
+and 16 period-comparison rows. All city-years pass coverage rules. Validation
+passes with disclosed warnings for known source gaps, export date alignment,
+the project-relative reference method and the documented station-network
+change. Automated checks do not claim independent human sign-off.
