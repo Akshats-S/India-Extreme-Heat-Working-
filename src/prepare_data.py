@@ -1,5 +1,5 @@
 # Merges Tmax and Tmin, checks the data, and saves the daily dataset.
-"""Prepare and validate the daily temperature dataset."""
+"""Prepare and validate the daily temperature dataset with this file"""
 
 import argparse
 import csv
